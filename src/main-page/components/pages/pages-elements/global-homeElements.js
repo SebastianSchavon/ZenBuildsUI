@@ -32,29 +32,23 @@ export const Content = styled.p`
 
 export const Title = styled.p`
     font-size: 80%;
-    &:hover{
-        cursor: pointer;
-    }
+    margin-top: 0.5rem;
+
 `;
 
 export const UsernameDisplay = styled.p`
     font-size: 80%;
+    margin-top: 0.5rem;
     margin-left: 2.1rem;
-`;
-
-export const Likes = styled.p`
-    font-size: 80%;
-`;
-
-export const PublishedDate = styled.p`
-    font-size: 80%;
 `;
 
 export const ContentHeader = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    &:hover{
+        cursor: pointer;
+    }
 `;
 
 export const Page = styled.section`
@@ -74,7 +68,7 @@ export const UserImg = styled.img`
     height: 1.5rem;
     width: 1.5rem;
     border-radius: 50%;
-    margin-bottom: -2.5%;
+    margin-bottom: -4.5%;
 `;
 
 export const UserHeader = styled.div`
