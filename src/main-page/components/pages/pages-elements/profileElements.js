@@ -1,0 +1,55 @@
+import styled from "styled-components";
+
+export const FormGroup = styled.div`
+    margin: 5px;
+`;
+
+export const FormInput = styled.input`
+    align-items: center;
+    margin-left: 5px;
+`;
+
+export const DescriptionTextArea = styled.textarea`
+    align-items: center;
+    margin-left: 5px;
+    min-width: 40rem;
+    min-height: 3rem;
+    text-align: left;
+`;
+
+export const Page = styled.section`
+    display: flex;
+
+`;
+
+export const ProfileSection = styled.section`
+    margin-left: auto;
+    margin-right: auto;
+`
+export const BuildsDiv = styled.div`
+
+`
+export const FollowersDiv = styled.div`
+
+`
+export const FollowingDiv = styled.div`
+
+`
+
+export const ListSection = styled.section`
+    display: flex;
+    flex-direction: row;
+`
+
+export const SubmitBtn = styled.button`
+    border-radius: 4px;
+    background: #256ce1;
+    padding: 6px 12px;
+    color: #fff;
+    border: none;
+    outline: none;
+
+    &:hover{
+        cursor: pointer;
+    }
+`;
