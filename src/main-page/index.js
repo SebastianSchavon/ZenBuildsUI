@@ -5,6 +5,8 @@ import Home from "./components/pages/home"
 import Global from "./components/pages/global"
 import Leaderboard from "./components/pages/leaderboard"
 import Profile from "./components/pages/profile"
+import User from "./components/pages/user"
+import Build from "./components/pages/build"
 import Login from "./components/auth/login"
 import Register from "./components/auth/register"
 import { PrivateRoute } from "./components/routing/privateRoute";
@@ -26,6 +28,8 @@ function App() {
                             <Route exact path="/global" element={<Global />} />
                             <Route exact path="/leaderboard" element={<Leaderboard />} />
                             <Route exact path="/profile" element={<Profile />} />
+                            <Route exact path="user/:id" element={<User />} />
+                            <Route exact path="build/:id" element={<Build />} />
                         </Route>
                         <Route exact path="/register" element={<Register />} />
                         <Route exact path="/login" element={<Login />} />
