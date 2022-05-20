@@ -54,7 +54,6 @@ const Global = () => {
             })
             .then(function (response) {
                 console.log("Success:", response.data);
-                console.log(buildId);
             })
             .catch(function (error) {
                 console.log(error);
