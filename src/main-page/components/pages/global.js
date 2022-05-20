@@ -5,9 +5,7 @@ import {
     Content,
     Title,
     ContentHeader,
-    Likes,
     Page,
-    PublishedDate,
     UserImg,
     UsernameDisplay
 } from "./pages-elements/global-homeElements";
@@ -70,27 +68,29 @@ const Global = () => {
 
     return (
         <Page>
-            {GlobalFeed.map((build) => (
+            {GlobalFeed.map((build, index) => (
                 <div>
                     <BuildDiv >
                         <UserImg  src="https://www.logolynx.com/images/logolynx/be/beb78778027c8c3d423794c882afe582.jpeg" />
-                        <ContentHeader >
+                        <ContentHeader onClick={() => onTitleClick()} >
                             <UsernameDisplay>
                                 {build.user.username} 
                             </UsernameDisplay>
-                            <Title onClick={() => onTitleClick()} >
+                            <Title >
                                 {build.title}
                             </Title>
                             <Title>
                                 {build.playerRace} vs {build.opponentRace}
                             </Title>
                         </ContentHeader>
-                        <Content value={visibillity}>{build.content}</Content>
+                        <Content key={index} value={visibillity}>{build.content}</Content>
                         <ContentHeader>
-                            <PublishedDate>{build.published}</PublishedDate>
-                            <Likes onClick={() => onSubmit(build.id)}>
-                                ❤ {build.likesCount}
-                            </Likes>
+                            <Title>
+                            {build.published}
+                            </Title>
+                            <Title onClick={() => onSubmit(build.id)}>
+                            ❤ {build.likesCount}
+                            </Title>
                         </ContentHeader>
                     </BuildDiv>
                 </div>

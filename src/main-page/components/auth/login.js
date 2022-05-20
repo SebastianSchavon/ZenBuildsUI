@@ -25,6 +25,7 @@ const Login = () => {
         console.log(authenticateRequest)
         await Auth.login(authenticateRequest)
         history('/home')
+        window.location.reload(false);
     }
 
     const signUp = () => {
