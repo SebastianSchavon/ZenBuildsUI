@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {RadioGroup, Radio} from 'react-radio-group'
 import Auth from "./auth";
 import { FormGroup, FormInput, AuthPage, SubmitBtn } from "./authElements";
 
@@ -10,8 +11,25 @@ const Register = () => {
         Username: "",
         Password: "",
         ConfirmPassword: "",
-        Species:""
+        Race:"",
+        ProfileImage: "",
     });
+
+    const setProfileImage = () => {
+        if(registerRequest.Race == 'Terran'){
+            setRegisterRequest({
+                ProfileImage: "src/assets/profileImgs/terran-img.png"
+            })
+        }else if(registerRequest.Race == 'Protoss'){
+            setRegisterRequest({
+                ProfileImage: "src/assets/profileImgs/protoss-img.png"
+            })
+        }else if(registerRequest.Race == 'Zerg'){
+            setRegisterRequest({
+                ProfileImage: "src/assets/profileImgs/zerg-img.png"
+            })
+        }
+    }
 
     // updates authenticareRequest data on change
     const onChange = (e) => {
@@ -21,11 +39,22 @@ const Register = () => {
         });
     };
 
+    const onRadioChange = (e) => {
+        setRegisterRequest({
+            ...registerRequest,
+            Race: e,
+            ProfileImage: `src/assets/profileImgs/${e}-img.png`
+
+        });
+        console.log(registerRequest)
+    };
 
     const onSubmit = async (e) => {
-        console.log(registerRequest)
+        setProfileImage()
+        
         await Auth.register(registerRequest)
         history('/login')
+        console.log(registerRequest)
     }
     return (
         <AuthPage>
@@ -43,6 +72,7 @@ const Register = () => {
                 <label htmlFor="Password">Password</label>
                 <FormInput
                     type="password"
+                    name="password"
                     placeholder="Password"
                     id="Password"
                     value={registerRequest.Password}
@@ -59,20 +89,22 @@ const Register = () => {
                     onChange={onChange}
                 />
             </FormGroup>
-            <FormGroup className="form-group">
-                <label htmlFor="Species">Species</label>
-                <FormInput
-                    type="text"
-                    placeholder="Species"
-                    id="Species"
-                    value={registerRequest.Species}
-                    onChange={onChange}
-                />
-            </FormGroup>
+            <RadioGroup
+                    name="race"
+                    onChange={onRadioChange}
+                    value={registerRequest.ProfileImage} 
+                >
+                    <Radio value="Terran" name="Terran" />
+                    Terran
+                    <Radio value="Protoss" name="Protoss"/>
+                    Protoss
+                    <Radio value="Zerg" name="Zerg"/>
+                    Zerg
+                </RadioGroup>
             <SubmitBtn
                 className="btn btn-primary mt-2"
                 // button disabled when no value at name or email
-                disabled={!registerRequest.Username || !registerRequest.Password || !registerRequest.Species}
+                disabled={!registerRequest.Username && !registerRequest.Password && !registerRequest.Species && !registerRequest}
                 onClick={onSubmit}
             >
                 Submit

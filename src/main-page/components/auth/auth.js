@@ -32,15 +32,28 @@ class Auth {
           });
     };
 
+    // register = async (registerRequest) => {
+    //     await api
+    //         .post("/register", {
+    //             registerRequest
+    //         })
+    //         .then(function (response) {
+    //             console.log(response);
+    //             return response.message
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //             return error.response.data
+    //         });
+    // };
+
     register = async (registerRequest) => {
-        await api
-            .post("/register", {
-                Username: registerRequest.Username,
-                Password: registerRequest.Password,
-                Species: registerRequest.Species,
+        
+        await axios
+            .post("http://localhost:4000/users/register", registerRequest, {
             })
             .then(function (response) {
-                console.log(response);
+                console.log("Success:", response.data);
                 return response.message
             })
             .catch(function (error) {

@@ -12,7 +12,7 @@ export const FormInput = styled.input`
 export const DescriptionTextArea = styled.textarea`
     align-items: center;
     margin-left: 5px;
-    min-width: 40rem;
+    min-width: 40vw;
     min-height: 3rem;
     text-align: left;
 `;
