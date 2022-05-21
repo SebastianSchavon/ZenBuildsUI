@@ -20,7 +20,7 @@ export const BuildDiv = styled.div`
 `;
 
 export const Content = styled.p`
-
+    white-space: pre-wrap;
     border: 1px solid beige;
     font-size: 110%;
     background: rgba(249, 241, 239, 0.3);

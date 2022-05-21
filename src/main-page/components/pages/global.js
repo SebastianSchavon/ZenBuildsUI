@@ -45,24 +45,22 @@ const Global = () => {
             });
     };
 
-    const LikeBuild = async (buildId) => {
+    const LikeBuild = async (buildId, data) => {
+        console.log(buildId);
         await axios
-            .put("http://localhost:4000/likes/toggleLike/" + buildId, {
+            .put("http://localhost:4000/likes/toggleLike/" + buildId, data, {
                 headers: {
+                    "Content-Type": "application/json",
                     // use Token saved in localstorage
-                    Authorization: localStorage.getItem("token"),
+                    Authorization: `bearer ${localStorage.getItem("token")}`,
                 },
             })
             .then(function (response) {
                 console.log("Success:", response.data);
+                
             })
             .catch(function (error) {
                 console.log(error);
-                console.log(localStorage.getItem("token"));
-                console.log(
-                    "http://localhost:4000/likes/toggleLike/" + buildId
-                );
-                // display error message here
             });
     };
 
