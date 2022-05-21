@@ -7,7 +7,8 @@ import {
     ContentHeader,
     Page,
     UserImg,
-    UsernameDisplay
+    UsernameDisplay,
+    NavLink,
 } from "./pages-elements/global-homeElements";
 
 const Global = () => {
@@ -22,8 +23,8 @@ const Global = () => {
     };
 
     const onTitleClick = (e) => {
-        setVisibillity(!visibillity)
-    }
+        setVisibillity(!visibillity);
+    };
 
     const getGlobalFeed = async () => {
         await axios
@@ -69,26 +70,31 @@ const Global = () => {
         <Page>
             {GlobalFeed.map((build, index) => (
                 <div>
-                    <BuildDiv >
-                        <UserImg  src="https://www.logolynx.com/images/logolynx/be/beb78778027c8c3d423794c882afe582.jpeg" />
-                        <ContentHeader onClick={() => onTitleClick()} >
-                            <UsernameDisplay>
-                                {build.user.username} 
-                            </UsernameDisplay>
-                            <Title >
-                                {build.title}
-                            </Title>
+                    <BuildDiv>
+                        <NavLink to={"/user/" + build.user.id}>
+                            <UserImg src="https://www.logolynx.com/images/logolynx/be/beb78778027c8c3d423794c882afe582.jpeg" />
+                        </NavLink>
+
+                        <ContentHeader onClick={() => onTitleClick()}>
+                            <NavLink to={"/user/" + build.user.id}>
+                                <UsernameDisplay>
+                                    {build.user.username}
+                                </UsernameDisplay>
+                            </NavLink>
+
+                            <NavLink to={"/build/" + build.id}>
+                                <Title>{build.title}</Title>
+                            </NavLink>
+
                             <Title>
                                 {build.playerRace} vs {build.opponentRace}
                             </Title>
                         </ContentHeader>
-                        <Content key={index} value={visibillity}>{build.content}</Content>
+                        <Content value={visibillity}>{build.content}</Content>
                         <ContentHeader>
-                            <Title>
-                            {build.published}
-                            </Title>
+                            <Title>{build.published}</Title>
                             <Title onClick={() => onSubmit(build.id)}>
-                            ❤ {build.likesCount}
+                                ❤ {build.likesCount}
                             </Title>
                         </ContentHeader>
                     </BuildDiv>
