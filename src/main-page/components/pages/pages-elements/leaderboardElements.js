@@ -1,4 +1,12 @@
 import styled from "styled-components";
+import { NavLink as Link } from 'react-router-dom'
+
+export const NavLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+
+
+`
 
 export const LeaderboardList = styled.ul`
     max-width: 40vw;

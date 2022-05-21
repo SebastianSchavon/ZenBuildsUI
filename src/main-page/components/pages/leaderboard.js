@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { LeaderboardList, LeaderboardRow } from "./pages-elements/leaderboardElements";
+
+import { LeaderboardList, LeaderboardRow, NavLink } from "./pages-elements/leaderboardElements";
 
 const Leaderboard = () => {
 
@@ -33,6 +34,7 @@ const Leaderboard = () => {
     return (
         <LeaderboardList>
             {Leaderboard.map(user => (
+                <NavLink to={'/user/'+user.id}>
                 <LeaderboardRow>
                     <p>
                         { user.username }
@@ -42,6 +44,8 @@ const Leaderboard = () => {
                     </p>
 
                 </LeaderboardRow>
+                </NavLink>
+
 
             ))}
         </LeaderboardList>
