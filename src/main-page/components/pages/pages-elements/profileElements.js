@@ -58,7 +58,7 @@ export const SubmitBtn = styled.button`
     color: #fff;
     border: none;
     outline: none;
-
+    margin: 0.5rem;
     &:hover{
         cursor: pointer;
     }

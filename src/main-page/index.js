@@ -29,7 +29,7 @@ function App() {
                             <Route exact path="/leaderboard" element={<Leaderboard />} />
                             <Route exact path="/profile" element={<Profile />} />
                             <Route exact path="user/:id" element={<User />} />
-                            <Route exact path="build/:id" element={<Build />} />
+                            <Route exact path="build" element={<Build />} />
                         </Route>
                         <Route exact path="/register" element={<Register />} />
                         <Route exact path="/login" element={<Login />} />

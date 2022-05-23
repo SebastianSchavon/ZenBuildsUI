@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {RadioGroup, Radio} from 'react-radio-group'
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
     FormGroup,
@@ -23,6 +24,8 @@ const Profile = () => {
         profileImage: "",
     });
 
+    const history = useNavigate();
+
     const [responseMessage, setResponseMessage] = useState();
 
     useEffect(() => {
@@ -34,6 +37,10 @@ const Profile = () => {
             ...profile,
             [e.target.id]: e.target.value,
         });
+    };
+
+    const onBuildButtonClick = (e) => {
+        history("/build")
     };
 
     const onRadioChange = (e) => {
@@ -78,7 +85,7 @@ const Profile = () => {
                 headers: {
                     "Content-Type": "application/json",
                     // use Token saved in localstorage
-                    Authorization: `bearer ${localStorage.getItem("token")}`,
+                    Authorization: `bearer ${localStorage.getItem("token")}`
                 },
             })
             .then(function (response) {
@@ -160,6 +167,12 @@ const Profile = () => {
                     Update profile
                 </SubmitBtn>
                 <p>{responseMessage}</p>
+                <SubmitBtn
+
+                    onClick={onBuildButtonClick}
+                >
+                    New Build Order
+                </SubmitBtn>
             </ProfileSection>
 
             <ListSection>

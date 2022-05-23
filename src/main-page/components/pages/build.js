@@ -1,62 +1,61 @@
 import { useEffect, useState } from "react";
-import { useLocation, useSearchParams, useParams } from 'react-router-dom'
+import { RadioGroup, Radio } from "react-radio-group";
+import { useLocation, useSearchParams, useParams } from "react-router-dom";
 import axios from "axios";
 import {
-    BuildDiv,
-    Content,
-    Title,
-    ContentHeader,
+    FormGroup,
+    FormInput,
+    BuildTextArea,
     Page,
-    UserImg,
-    UsernameDisplay,
-    NavLink,
-} from "./pages-elements/global-homeElements";
+    BuildSection,
+    ListSection,
+    SubmitBtn,
+    VersusDiv,
+    VS,
+} from "./pages-elements/buildElements";
 
 const Build = () => {
-    
-    const [build, setBuild] = useState([]);
+    const [profile, setProfile] = useState({
+        title: "",
+        playerRace: "",
+        opponentRace: "",
+        content: "",
+    });
 
-    const { id } = useParams();
+    const [responseMessage, setResponseMessage] = useState();
 
-    const [visibillity, setVisibillity] = useState(false);
-
-    useEffect(() => {
-        
-        console.log(id)
-        
-    }, [null]);
-
-    const onSubmit = async (e) => {
-        LikeBuild(e);
+    const onChange = (e) => {
+        setProfile({
+            ...profile,
+            [e.target.id]: e.target.value,
+        });
     };
 
-    const onTitleClick = (e) => {
-        setVisibillity(!visibillity);
+    const onPlayerRaceChange = (e) => {
+        setProfile({
+            ...profile,
+            playerRace: e,
+        });
+        console.log(profile);
+    };
+    const onOponentRaceRadioChange = (e) => {
+        setProfile({
+            ...profile,
+            opponentRace: e,
+        });
+        console.log(profile);
     };
 
 
-    const getBuild = async () => {
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        await createBuild(profile);
+    };
+
+    const createBuild = async () => {
+        console.log(profile);
         await axios
-            .get("http://localhost:4000/builds/getBuildById/1", {
-                headers: {
-                    "Content-Type": "application/json",
-                    // use Token saved in localstorage
-                    Authorization: localStorage.getItem("token"),
-                },
-            })
-            .then(function (response) {
-                console.log("Success:", response.data);
-                setBuild(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-                // display error message here
-            });
-    };
-    const LikeBuild = async (buildId, data) => {
-        console.log(buildId);
-        await axios
-            .put("http://localhost:4000/likes/toggleLike/" + buildId, data, {
+            .post("http://localhost:4000/builds/createBuild", profile, {
                 headers: {
                     "Content-Type": "application/json",
                     // use Token saved in localstorage
@@ -65,17 +64,72 @@ const Build = () => {
             })
             .then(function (response) {
                 console.log("Success:", response.data);
-                
+                setResponseMessage(response.message);
             })
             .catch(function (error) {
                 console.log(error);
+                setResponseMessage(error.message);
             });
     };
 
     return (
-        <div>
+        <Page>
+            <BuildSection>
+                <form onSubmit={onSubmit}>
+                    <FormGroup className="form-group">
+                        <label htmlFor="title">Build Title</label>
+                        <FormInput
+                            type="text"
+                            placeholder="Title"
+                            id="title"
+                            onChange={onChange}
+                        />
+                    </FormGroup>
 
-        </div>
+                    <FormGroup className="form-group">
+                        <label htmlFor="description">Build Order</label>
+                        <BuildTextArea
+                            type="text"
+                            placeholder="Build Order"
+                            id="content"
+                            onChange={onChange}
+                        />
+                    </FormGroup>
+                    <VersusDiv>
+                        <RadioGroup
+                            name="race"
+                            onChange={onPlayerRaceChange}
+                            value={profile.playerRace}
+                        >
+                            <Radio value="Terran" />
+                            Terran
+                            <Radio value="Protoss" />
+                            Protoss
+                            <Radio value="Zerg" />
+                            Zerg
+                        </RadioGroup>
+                        <VS>VS</VS>
+                        <RadioGroup
+                            name="race2"
+                            onChange={onOponentRaceRadioChange}
+                            value={profile.opponentRace}
+                        >
+                            <Radio value="Terran-" />
+                            Terran
+                            <Radio value="Protoss" />
+                            Protoss
+                            <Radio value="Zerg" />
+                            Zerg
+                            <Radio value="Any" />
+                            Any
+                        </RadioGroup>
+                    </VersusDiv>
+
+                    <SubmitBtn>Post Build Order</SubmitBtn>
+                    <p>{responseMessage}</p>
+                </form>
+            </BuildSection>
+        </Page>
     );
 };
 
