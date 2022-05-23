@@ -7,11 +7,16 @@ import {
     SidebarWrapper,
 } from "./sidebarElements";
 import { useState } from "react";
-import Auth from '../../auth/auth'
+import axios from "axios";
 
 
 const Sidebar = ({visibillity, setVisibillity}) => {
     
+    
+    const logout = () => {
+        localStorage.removeItem("token");
+        window.location.reload();
+    }
 
     return (
         <SidebarContainer value={visibillity}>
@@ -25,7 +30,7 @@ const Sidebar = ({visibillity, setVisibillity}) => {
                     <SidebarLink to="/leaderboard">Leaderboard</SidebarLink>
                     <SidebarLink to="/profile">Profile</SidebarLink>
                     {localStorage.getItem("token") ? (
-                        <SidebarLink to="/" onClick={Auth.logout}>
+                        <SidebarLink to="/" onClick={logout}>
                             Sign Out
                         </SidebarLink>
                     ) : (

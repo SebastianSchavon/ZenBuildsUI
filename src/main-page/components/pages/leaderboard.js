@@ -1,55 +1,59 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { LeaderboardList, LeaderboardRow, NavLink } from "./pages-elements/leaderboardElements";
+import {
+    LeaderboardList,
+    LeaderboardRow,
+    NavLink,
+    UserDiv,
+    Page,
+    ProfileImage,
+    Username,
+    ZenPoints,
+    RegDate,
+    FollowButton,
+    Description,
+} from "./pages-elements/leaderboardElements";
 
 const Leaderboard = () => {
-
     useEffect(() => {
         getLeaderboard();
-    },[null])
+    }, [null]);
 
     const [Leaderboard, setLeaderboard] = useState([]);
 
-
     const getLeaderboard = async () => {
-        await axios.get('http://localhost:4000/users/getTop20Users', {
-            headers: {
-                'Content-Type': 'application/json',
-                // use Token saved in localstorage
-                'Authorization': localStorage.getItem('token')
-            }
-          })
-          .then(function (response) {
-            console.log('Success:', response.data);
-            setLeaderboard(response.data)
-          })
-          .catch(function (error) {
-            console.log(error)
-            // display error message here
-
-          });
+        await axios
+            .get("http://localhost:4000/users/getTop20Users", {
+                headers: {
+                    "Content-Type": "application/json",
+                    // use Token saved in localstorage
+                    Authorization: localStorage.getItem("token"),
+                },
+            })
+            .then(function (response) {
+                console.log("Success:", response.data);
+                setLeaderboard(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+                // display error message here
+            });
     };
 
     return (
         <LeaderboardList>
-            {Leaderboard.map(user => (
-                <NavLink to={'/user/'+user.id}>
-                <LeaderboardRow>
-                    <p>
-                        { user.username }
-                    </p>
-                    <p>
-                        ZenPoints: { user.zenPoints }❤
-                    </p>
-
-                </LeaderboardRow>
+            {Leaderboard.map((user) => (
+                <NavLink to={"/user/" + user.id}>
+                    <LeaderboardRow>
+                        <ProfileImage  src={`${process.env.PUBLIC_URL}/${user.profileImage}`}/>
+                        <Username>{user.username}</Username>
+                        <ZenPoints>{user.zenPoints} ❤</ZenPoints>
+                    </LeaderboardRow>
                 </NavLink>
-
-
             ))}
         </LeaderboardList>
-      );
-}
- 
+    );
+};
+
 export default Leaderboard;

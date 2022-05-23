@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Auth from "../auth/auth";
+import axios from "axios";
 import { NavLink as Link, useNavigate } from "react-router-dom";
 import {
     Nav,
@@ -11,10 +11,12 @@ import {
 } from "./navbarElements";
 
 const Navbar = ({visibillity, setVisibillity}) => {
-    // const history = useNavigate();
-    // const signIn = () => {
-    //     history("/login");
-    // };
+
+    
+    const logout = () => {
+        localStorage.removeItem("token");
+        window.location.reload();
+    }
 
     return (
         <Nav>
@@ -39,7 +41,7 @@ const Navbar = ({visibillity, setVisibillity}) => {
 
             {localStorage.getItem("token") ? (
                 <NavBtn>
-                    <NavBtnLink to="/" onClick={Auth.logout}>Sign Out</NavBtnLink>
+                    <NavBtnLink to="/" onClick={logout}>Sign Out</NavBtnLink>
                 </NavBtn>
             ) : (
                 <NavBtn>

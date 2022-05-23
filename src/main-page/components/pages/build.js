@@ -34,6 +34,7 @@ const Build = () => {
         setVisibillity(!visibillity);
     };
 
+
     const getBuild = async () => {
         await axios
             .get("http://localhost:4000/builds/getBuildById/1", {
@@ -52,7 +53,6 @@ const Build = () => {
                 // display error message here
             });
     };
-
     const LikeBuild = async (buildId, data) => {
         console.log(buildId);
         await axios

@@ -47,10 +47,6 @@ const Profile = () => {
     };
 
 
-
-
-
-
     const onSubmit = async (e) => {
         console.log(localStorage.getItem("token"));
         await updateProfile();
@@ -90,11 +86,11 @@ const Profile = () => {
             })
             .then(function (response) {
                 console.log("Success:", response.data);
-                setResponseMessage(response.data.message);
+                setResponseMessage(response.message);
             })
             .catch(function (error) {
                 console.log(error);
-                setResponseMessage(error.response.data);
+                setResponseMessage(error.message);
             });
     };
 
@@ -146,11 +142,11 @@ const Profile = () => {
                     onChange={onRadioChange}
                     value={profile.profileImage} 
                 >
-                    <Radio value="src/assets/profileImgs/terran-img.png" />
+                    <Radio value="Terran-img.png" />
                     Terran
-                    <Radio value="src/assets/profileImgs/protoss-img.png" />
+                    <Radio value="Protoss-img.png" />
                     Protoss
-                    <Radio value="src/assets/profileImgs/zerg-img.png" />
+                    <Radio value="Zerg-img.png" />
                     Zerg
                 </RadioGroup>
                 <SubmitBtn

@@ -1,35 +1,45 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {RadioGroup, Radio} from 'react-radio-group'
-import Auth from "./auth";
+import { RadioGroup, Radio } from "react-radio-group";
+import axios from "axios";
 import { FormGroup, FormInput, AuthPage, SubmitBtn } from "./authElements";
 
 const Register = () => {
     const history = useNavigate();
-
+    const [responseMessage, setResponseMessage] = useState();
     const [registerRequest, setRegisterRequest] = useState({
         Username: "",
         Password: "",
         ConfirmPassword: "",
-        Race:"",
+        Race: "",
         ProfileImage: "",
     });
 
-    const setProfileImage = () => {
-        if(registerRequest.Race == 'Terran'){
-            setRegisterRequest({
-                ProfileImage: "src/assets/profileImgs/terran-img.png"
+    // const [errorMessage, setErrorMessage] = useState({
+    //     Username: " ",
+    //     Password: " "   
+    // });
+
+    // const checkErrorMessage = (errorMessage) => {
+    //     if(errorMessage.hasOwnProperty("ConfirmPassword")){
+    //         setErrorMessage({Password: errorMessage.ConfirmPassword})
+    //     }
+    //     if(errorMessage.hasOwnProperty("Username")){
+    //         setErrorMessage({Username: errorMessage.Username})
+    //     }
+    // }
+
+    const register = async (registerRequest) => {
+        await axios
+            .post("http://localhost:4000/users/register", registerRequest, {})
+            .then(function (response) {
+                console.log("Success:", response.data);
+                history("/login");
             })
-        }else if(registerRequest.Race == 'Protoss'){
-            setRegisterRequest({
-                ProfileImage: "src/assets/profileImgs/protoss-img.png"
-            })
-        }else if(registerRequest.Race == 'Zerg'){
-            setRegisterRequest({
-                ProfileImage: "src/assets/profileImgs/zerg-img.png"
-            })
-        }
-    }
+            .catch(function (error) {
+                console.log(error.response.data);
+            });
+    };
 
     // updates authenticareRequest data on change
     const onChange = (e) => {
@@ -42,75 +52,81 @@ const Register = () => {
     const onRadioChange = (e) => {
         setRegisterRequest({
             ...registerRequest,
-            Race: e,
-            ProfileImage: `src/assets/profileImgs/${e}-img.png`
-
+            ProfileImage: e,
         });
-        console.log(registerRequest)
     };
 
-    const onSubmit = async (e) => {
-        setProfileImage()
-        
-        await Auth.register(registerRequest)
-        history('/login')
-        console.log(registerRequest)
-    }
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        await register(registerRequest);
+    };
     return (
         <AuthPage>
-            <FormGroup className="form-group">
-                <label htmlFor="Username">Username</label>
-                <FormInput
-                    type="text"
-                    placeholder="Username"
-                    id="Username"
-                    value={registerRequest.Username}
-                    onChange={onChange}
-                />
-            </FormGroup>
-            <FormGroup className="form-group">
-                <label htmlFor="Password">Password</label>
-                <FormInput
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    id="Password"
-                    value={registerRequest.Password}
-                    onChange={onChange}
-                />
-            </FormGroup>
-            <FormGroup className="form-group">
-                <label htmlFor="Password">Confirm Password</label>
-                <FormInput
-                    type="password"
-                    placeholder="Password"
-                    id="ConfirmPassword"
-                    value={registerRequest.ConfirmPassword}
-                    onChange={onChange}
-                />
-            </FormGroup>
-            <RadioGroup
+            <form onSubmit={onSubmit}>
+                <FormGroup className="form-group">
+                    <label htmlFor="Username">Username</label>
+                    <FormInput
+                        type="text"
+                        placeholder="Username"
+                        id="Username"
+                        value={registerRequest.Username}
+                        required
+                        onChange={onChange}
+                    />
+                </FormGroup>
+                <FormGroup className="form-group">
+                    <label htmlFor="Password">Password</label>
+                    <FormInput
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        id="Password"
+                        value={registerRequest.Password}
+                        required
+                        onChange={onChange}
+                    />
+                </FormGroup>
+                <FormGroup className="form-group">
+                    <label htmlFor="Password">Confirm Password</label>
+                    <FormInput
+                        type="password"
+                        placeholder="Password"
+                        id="ConfirmPassword"
+                        value={registerRequest.ConfirmPassword}
+                        required
+                        onChange={onChange}
+                    />
+                </FormGroup>
+                <RadioGroup
                     name="race"
                     onChange={onRadioChange}
-                    value={registerRequest.ProfileImage} 
+                    value={registerRequest.ProfileImage}
+                    required
                 >
-                    <Radio value="Terran" name="Terran" />
+                    <Radio value="Terran-img.png" name="race" required/>
                     Terran
-                    <Radio value="Protoss" name="Protoss"/>
+                    <Radio value="Protoss-img.png" name="race" required/>
                     Protoss
-                    <Radio value="Zerg" name="Zerg"/>
+                    <Radio value="Zerg-img.png" name="race" required/>
                     Zerg
                 </RadioGroup>
-            <SubmitBtn
-                className="btn btn-primary mt-2"
-                // button disabled when no value at name or email
-                disabled={!registerRequest.Username && !registerRequest.Password && !registerRequest.Species && !registerRequest}
-                onClick={onSubmit}
-            >
-                Submit
-            </SubmitBtn>
+                <SubmitBtn
+                    className="btn btn-primary mt-2"
+                    // button disabled when no value at name or email
+                    // disabled={
+                    //     !registerRequest.Username &&
+                    //     !registerRequest.Password &&
+                    //     !registerRequest.Species &&
+                    //     !registerRequest
+                    // }
+                    
+                >
+                    Register
+                </SubmitBtn>
+                <p>{responseMessage}</p>
+            </form>
         </AuthPage>
     );
-}
- 
+};
+
 export default Register;

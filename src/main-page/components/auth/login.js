@@ -1,17 +1,35 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Auth from "./auth";
+import axios from "axios";
 import { FormGroup, FormInput, AuthPage, SubmitBtn, SignupDiv } from "./authElements";
 
 const Login = () => {
     const history = useNavigate();
-
+    const [responseMessage, setResponseMessage] = useState();
 
 
     const [authenticateRequest, setAuthenticateRequest] = useState({
         Username: "",
         Password: "",
     });
+
+
+    const login = async (authenticateRequest) => {
+        await axios.post('http://localhost:4000/users/authenticate', {
+            Username: authenticateRequest.Username,
+            Password: authenticateRequest.Password
+          })
+          .then(function (response) {
+            localStorage.setItem('token', response.data.token);
+            
+            history('/home')
+            window.location.reload(false);
+          })
+          .catch(function (error) {
+            console.log(error)
+            setResponseMessage(error.response.data);
+          });
+    };
 
     // updates authenticareRequest data on change
     const onChange = (e) => {
@@ -21,12 +39,12 @@ const Login = () => {
         });
     };
 
-    const onSubmit = async (e) => {
-        console.log(authenticateRequest)
-        await Auth.login(authenticateRequest)
-        history('/home')
-        window.location.reload(false);
-    }
+
+    
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        await login(authenticateRequest)
+    };
 
     const signUp = () => {
         history('/register')
@@ -35,6 +53,7 @@ const Login = () => {
 
     return (
         <AuthPage>
+            <form onSubmit={onSubmit}>
             <FormGroup className="form-group">
                 <label htmlFor="name">Username</label>
                 <FormInput
@@ -42,6 +61,7 @@ const Login = () => {
                     placeholder="Username"
                     id="Username"
                     value={authenticateRequest.Username}
+                    required
                     onChange={onChange}
                 />
             </FormGroup>
@@ -52,19 +72,23 @@ const Login = () => {
                     placeholder="Password"
                     id="Password"
                     value={authenticateRequest.Password}
+                    required
                     onChange={onChange}
                 />
             </FormGroup>
             <SubmitBtn
                 // button disabled when no value at name or email
-                disabled={!authenticateRequest.Username || !authenticateRequest.Password}
-                onClick={onSubmit}
+                // disabled={!authenticateRequest.Username || !authenticateRequest.Password}
             >
-                Submit
+                Login
             </SubmitBtn>
+            </form>
+            
+           
             <SignupDiv className="signUp-div">
                 <a onClick={signUp}>Sign up?</a>
             </SignupDiv>
+            <p>{responseMessage}</p>
         </AuthPage>
     );
 };
