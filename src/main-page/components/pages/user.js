@@ -48,7 +48,7 @@ const User = () => {
                 />
                 <Username>{user.username}</Username>
                 <Description>{user.description}</Description>
-                <ZenPoints>ZenPonts: ❤{user.zenPoints}</ZenPoints>
+                <ZenPoints>ZenPonts: {user.zenPoints} ❤</ZenPoints>
                 <RegDate>Registration date: {user.registerDate}</RegDate>
                 <FollowButton>Follow</FollowButton>
             </UserDiv>

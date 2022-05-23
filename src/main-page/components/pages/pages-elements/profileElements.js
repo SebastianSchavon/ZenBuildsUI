@@ -1,24 +1,34 @@
 import styled from "styled-components";
+import {RadioGroup, Radio} from 'react-radio-group'
 
 export const FormGroup = styled.div`
     margin: 5px;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const FormInput = styled.input`
     align-items: center;
     margin-left: 5px;
+    padding: 5px;
+    margin: 5px;
 `;
+
+
 
 export const DescriptionTextArea = styled.textarea`
     align-items: center;
-    margin-left: 5px;
+    margin: 5px;
+    padding: 5px;
     min-width: 40vw;
     min-height: 3rem;
     text-align: left;
+
 `;
 
 export const Page = styled.section`
-    display: flex;
+    margin: 2rem;
+    flex-direction: row;
 
 `;
 

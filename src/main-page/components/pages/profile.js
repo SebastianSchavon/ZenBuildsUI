@@ -23,8 +23,6 @@ const Profile = () => {
         profileImage: "",
     });
 
-
-
     const [responseMessage, setResponseMessage] = useState();
 
     useEffect(() => {
@@ -43,9 +41,8 @@ const Profile = () => {
             ...profile,
             profileImage: e,
         });
-        console.log(profile)
+        console.log(profile);
     };
-
 
     const onSubmit = async (e) => {
         console.log(localStorage.getItem("token"));
@@ -131,7 +128,7 @@ const Profile = () => {
                     <label htmlFor="newPassword">New Password</label>
                     <FormInput
                         type="text"
-                        placeholder=""
+                        placeholder="*******"
                         id="newPassword"
                         defaultValue={profile.newPassword}
                         onChange={onChange}
@@ -140,7 +137,7 @@ const Profile = () => {
                 <RadioGroup
                     name="race"
                     onChange={onRadioChange}
-                    value={profile.profileImage} 
+                    value={profile.profileImage}
                 >
                     <Radio value="Terran-img.png" />
                     Terran
@@ -149,6 +146,7 @@ const Profile = () => {
                     <Radio value="Zerg-img.png" />
                     Zerg
                 </RadioGroup>
+
                 <SubmitBtn
                     // button disabled when no value at name or email
                     disabled={

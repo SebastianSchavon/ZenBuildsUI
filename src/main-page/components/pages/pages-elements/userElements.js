@@ -5,6 +5,7 @@ export const UserDiv = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
+    margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
 `;
