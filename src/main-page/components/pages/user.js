@@ -14,14 +14,15 @@ import {
 
 const User = () => {
     useEffect(() => {
-        getBuild();
+        getUser();
     }, [null]);
 
     const [user, setUser] = useState([]);
+    const [visibillity, setVisibillity] = useState(false);
 
     const { id } = useParams();
 
-    const getBuild = async () => {
+    const getUser = async () => {
         await axios
             .get("http://localhost:4000/users/getUserByUserId/" + id, {
                 headers: {
@@ -33,10 +34,54 @@ const User = () => {
             .then(function (response) {
                 console.log("Success:", response.data);
                 setUser(response.data);
+                followCheck(response.data.id)
             })
             .catch(function (error) {
                 console.log(error);
                 // display error message here
+            });
+    };
+
+    const followCheck = async (id) => {
+        await axios
+            .get("http://localhost:4000/followers/followCheck/" + id, {
+                headers: {
+                    "Content-Type": "application/json",
+                    // use Token saved in localstorage
+                    Authorization: localStorage.getItem("token"),
+                },
+            })
+            .then(function (response) {
+                console.log("Success:", response.data);
+                if(response.data){
+                    setVisibillity(true)
+                }else{
+                    setVisibillity(false)
+                }
+               
+            })
+            .catch(function (error) {
+                console.log(error);
+                // display error message here
+            });
+    };
+
+    const addFollow = async (id, data) => {
+        
+        await axios
+            .post("http://localhost:4000/followers/addFollow/" + id, data, {
+                headers: {
+                    "Content-Type": "application/json",
+                    // use Token saved in localstorage
+                    Authorization: `bearer ${localStorage.getItem("token")}`,
+                },
+            })
+            .then(function (response) {
+                console.log("Success:", response.data);
+                window.location.reload(false);
+            })
+            .catch(function (error) {
+                console.log(error);
             });
     };
 
@@ -50,7 +95,12 @@ const User = () => {
                 <Description>{user.description}</Description>
                 <ZenPoints>ZenPonts: {user.zenPoints} ❤</ZenPoints>
                 <RegDate>Registration date: {user.registerDate}</RegDate>
-                <FollowButton>Follow</FollowButton>
+                
+                {visibillity ? (
+                <FollowButton onClick={() => addFollow(user.id)}>Unfollow</FollowButton>
+            ) : (
+                <FollowButton onClick={() => addFollow(user.id)}>Follow</FollowButton>
+            )}
             </UserDiv>
         </Page>
     );

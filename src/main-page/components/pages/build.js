@@ -114,7 +114,7 @@ const Build = () => {
                             onChange={onOponentRaceRadioChange}
                             value={profile.opponentRace}
                         >
-                            <Radio value="Terran-" />
+                            <Radio value="Terran" />
                             Terran
                             <Radio value="Protoss" />
                             Protoss

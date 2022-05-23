@@ -21,14 +21,18 @@ export const DescriptionTextArea = styled.textarea`
     margin: 5px;
     padding: 5px;
     min-width: 40vw;
-    min-height: 3rem;
+    min-height: 5rem;
     text-align: left;
+    resize: none;
 
 `;
 
 export const Page = styled.section`
     margin: 2rem;
     flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40vw;
 
 `;
 

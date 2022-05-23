@@ -6,6 +6,7 @@ export const UserDiv = styled.div`
     flex-direction: column;
     text-align: center;
     margin-top: 1rem;
+    max-width: 60vw;
     margin-left: auto;
     margin-right: auto;
 `;

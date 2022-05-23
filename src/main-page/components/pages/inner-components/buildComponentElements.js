@@ -25,7 +25,15 @@ export const UserDiv = styled.div`
 
 `;
 
-
+export const ExpandButton = styled.button`
+    background: 0;
+    border: 0;
+    width: 6rem;
+    height: 2.5rem;
+    &:hover {
+        cursor: pointer;
+    }
+`;
 
 export const Content = styled.p`
     white-space: pre-wrap;
@@ -36,12 +44,13 @@ export const Content = styled.p`
     text-align: start;
 
     
-    
+    margin-top: 1REM;
+    margin-bottom: 1REM;
     margin-left: auto;
     margin-right: auto;
     transition: 0.3s ease-in-out;
     opacity: ${(props) => (props.value ? "100%" : "0")};
-    min-height: ${(props) => (props.value ? "80vh" : "0")};
+    min-height: ${(props) => (props.value ? "40vh" : "0")};
     height: ${(props) => (props.value ? "100%" : "0")};
     /* margin-top: ${(props) => (props.value ? "1rem" : "0")};
     margin-top: ${(props) => (props.value ? "1rem" : "0")}; */

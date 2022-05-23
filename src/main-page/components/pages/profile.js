@@ -67,10 +67,12 @@ const Profile = () => {
             })
             .then(function (response) {
                 console.log("Success:", response.data);
+                
                 setProfile({
                     description: response.data.description,
                     username: response.data.username,
                 });
+                
             })
             .catch(function (error) {
                 console.log(error);

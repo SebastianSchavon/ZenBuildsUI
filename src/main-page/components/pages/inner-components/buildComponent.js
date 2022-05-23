@@ -10,7 +10,8 @@ import {
     NavLink,
     BuildInfo,
     UserDiv,
-    LikesCount
+    LikesCount,
+    ExpandButton
 } from "./buildComponentElements";
 
 const BuildComponent = ({ build }) => {
@@ -49,7 +50,7 @@ const BuildComponent = ({ build }) => {
     };
 
     return (
-        <BuildDiv onClick={() => onTitleClick()}>
+        <BuildDiv >
             <ContentHeader >
                 <UserDiv>
                     <NavLink to={"/user/" + build.user.id}>
@@ -59,10 +60,9 @@ const BuildComponent = ({ build }) => {
                         <UsernameDisplay>{build.user.username}</UsernameDisplay>
                     </NavLink>
                 </UserDiv>
-
-                <BuildInfo>
-                    {build.playerRace} vs {build.opponentRace}
-                </BuildInfo>
+            <ExpandButton onClick={() => onTitleClick()}>
+                expand
+            </ExpandButton>
             </ContentHeader>
             <Title >{build.title}</Title>
             {/* <NavLink to={"/build/" + build.id}>
@@ -71,6 +71,10 @@ const BuildComponent = ({ build }) => {
             <Content value={visibillity}>{build.content}</Content>
             <ContentHeader>
                 <BuildInfo>{build.published}</BuildInfo>
+                
+                <BuildInfo>
+                    {build.playerRace} vs {build.opponentRace}
+                </BuildInfo>
                 <LikesCount onClick={() => onSubmit(build.id)}>
                     ❤ {build.likesCount}
                 </LikesCount>
