@@ -5,14 +5,9 @@ import {
     LeaderboardList,
     LeaderboardRow,
     NavLink,
-    UserDiv,
-    Page,
     ProfileImage,
     Username,
     ZenPoints,
-    RegDate,
-    FollowButton,
-    Description,
 } from "./pages-elements/leaderboardElements";
 
 const Leaderboard = () => {

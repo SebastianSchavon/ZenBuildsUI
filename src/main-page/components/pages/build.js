@@ -8,7 +8,6 @@ import {
     BuildTextArea,
     Page,
     BuildSection,
-    ListSection,
     SubmitBtn,
     VersusDiv,
     VS,

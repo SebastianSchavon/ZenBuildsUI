@@ -56,3 +56,48 @@ export const Page = styled.section`
     display: flex;
     flex-direction: column;
 `;
+
+export const ProfileSection = styled.section`
+    margin-left: auto;
+    margin-right: auto;
+`
+export const Hr = styled.hr`
+    margin-top: 5rem;
+    margin-bottom: 2.5rem;
+    
+`
+
+export const BuildsDiv = styled.div`
+    text-align: center;
+`
+export const FollowersDiv = styled.div`
+
+`
+export const FollowingDiv = styled.div`
+
+`
+export const ListSection = styled.section`
+    display: flex;
+    flex-direction: row;
+    
+    margin-left: auto;
+    margin-right: auto;
+`
+
+export const BuildsFollowers = styled.div`
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: flex;
+
+
+`
+export const FollowersP = styled.p`
+    opacity: ${props => props.value ? '100%' : '40%'};
+    margin-right: 2.5rem;
+`;
+
+export const BuildsP = styled.p`
+    opacity: ${props => props.value ? '40%' : '100%'};
+    margin-left: 2.5rem;
+`;

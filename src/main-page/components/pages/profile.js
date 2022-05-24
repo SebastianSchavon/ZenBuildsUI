@@ -8,10 +8,6 @@ import {
     DescriptionTextArea,
     Page,
     ProfileSection,
-    BuildsDiv,
-    FollowersDiv,
-    FollowingDiv,
-    ListSection,
     SubmitBtn,
 } from "./pages-elements/profileElements";
 
@@ -177,11 +173,7 @@ const Profile = () => {
                 </SubmitBtn>
             </ProfileSection>
 
-            <ListSection>
-                <BuildsDiv></BuildsDiv>
-                <FollowingDiv></FollowingDiv>
-                <FollowersDiv></FollowersDiv>
-            </ListSection>
+
         </Page>
     );
 };
