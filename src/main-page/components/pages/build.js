@@ -63,7 +63,7 @@ const Build = () => {
             })
             .then(function (response) {
                 console.log("Success:", response.data);
-                setResponseMessage(response.message);
+                setResponseMessage(response.data.message);
             })
             .catch(function (error) {
                 console.log(error);
