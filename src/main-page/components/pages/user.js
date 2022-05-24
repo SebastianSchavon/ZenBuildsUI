@@ -181,7 +181,7 @@ const User = () => {
                 )}
                 <p>{responseMessage}</p>
             </UserDiv>
-            <Hr />
+            
             <BuildsFollowers>
                 <FollowersP
                     value={followingFollowers}

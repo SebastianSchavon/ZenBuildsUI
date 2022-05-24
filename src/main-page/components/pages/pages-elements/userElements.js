@@ -89,6 +89,7 @@ export const BuildsFollowers = styled.div`
     margin-right: auto;
     text-align: center;
     display: flex;
+    margin-top: 8rem;
 
 
 `
