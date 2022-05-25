@@ -14,22 +14,34 @@ const Login = () => {
     const history = useNavigate();
     const [responseMessage, setResponseMessage] = useState();
 
+    useEffect(() => {
+        getIp();
+    }, [null]);
+
     const [authenticateRequest, setAuthenticateRequest] = useState({
         Username: "",
         Password: "",
     });
 
-    const [userlogRequest, setUserlogRequest] = useState({});
+    const [userlogRequest, setUserlogRequest] = useState({
+        Ip: "",
+        Username:"",
+        AuthSuccessful: false
+    });
 
     const getIp = async () => {
         await axios
             .get("https://www.myexternalip.com/json", {
             })
             .then(function (response) {
-                console.log(response)
+                setUserlogRequest({
+                    ...userlogRequest,
+                    Ip: response.data.ip
+                })
+                
             })
             .catch(function (error) {
-                console.log(error);
+
             });
     };
 
@@ -41,9 +53,25 @@ const Login = () => {
             })
             .then(function (response) {
                 localStorage.setItem("token", response.data.token);
-
+                logAuthentication(true);
                 history("/home");
                 window.location.reload(false);
+            })
+            .catch(function (error) {
+                console.log(error);
+                logAuthentication(false);
+                console.log(userlogRequest)
+            });
+    };
+
+    const logAuthentication = async (authSuccessful) => {
+        console.log(userlogRequest)
+        await axios
+            .post("http://localhost:4000/userlogs/logAuthentication", {
+                ...userlogRequest,
+                AuthSuccessful: authSuccessful,
+            }).then(function (response) {
+                console.log("Success:", response.data);
             })
             .catch(function (error) {
                 console.log(error);
@@ -55,6 +83,10 @@ const Login = () => {
         setAuthenticateRequest({
             ...authenticateRequest,
             [e.target.id]: e.target.value,
+        });
+        setUserlogRequest({
+            ...userlogRequest,
+            [e.target.id]: e.target.value
         });
     };
 
@@ -78,12 +110,15 @@ const Login = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        getIp();
+        
         setFormErrors(validate(authenticateRequest));
 
 
 
         await login(authenticateRequest);
+        
+        await logAuthentication(userlogRequest);
+        
     };
 
     const signUp = () => {
