@@ -9,7 +9,7 @@ import {
     Page,
     ProfileSection,
     SubmitBtn,
-    ErrorMessage
+    ErrorMessage,
 } from "./pages-elements/profileElements";
 
 const Profile = () => {
@@ -22,50 +22,37 @@ const Profile = () => {
     });
 
     const [formErrors, setFormErrors] = useState({});
-    const [enableSubmit, setEnableSubmit] = useState();
 
     const validate = (values) => {
-        console.log(values)
+        console.log(values);
         const errors = {};
         const regex = /^[a-zA-Z0-9_]+$/i;
 
         if (!values.username && values.username != profile.username) {
             errors.Username = "Username is required!";
-            setEnableSubmit(false);
         } else if (!regex.test(values.username)) {
             errors.Username = "Only letters, numbers and underscore allowed";
-            setEnableSubmit(false);
         } else if (values.username.length < 3) {
             errors.Username = "Username must be more than 3 characters";
-            setEnableSubmit(false);
         } else if (values.username.length > 12) {
             errors.Username = "Username cannot exceed more than 12 characters";
-            setEnableSubmit(false);
         } else {
-            setEnableSubmit(true);
         }
 
         if (profile.newPassword || profile.oldPassword) {
-            if(!values.oldPassword){
+            if (!values.oldPassword) {
                 errors.OldPassword = "Old password is required";
-                setEnableSubmit(false);
             }
             if (!values.newPassword) {
                 errors.NewPassword = "New password is required";
-                setEnableSubmit(false);
             } else if (values.newPassword.length < 4) {
                 errors.NewPassword = "Password must be more than 4 characters";
-                setEnableSubmit(false);
             } else if (values.newPassword.length > 12) {
                 errors.NewPassword =
                     "Password cannot exceed more than 12 characters";
-                setEnableSubmit(false);
             } else {
-                setEnableSubmit(true);
             }
         }
-
-
 
         return errors;
     };
@@ -100,10 +87,8 @@ const Profile = () => {
     const onSubmit = async (event) => {
         event.preventDefault();
         setFormErrors(validate(profile));
-        if (enableSubmit == true) {
-            await updateProfile();
-        }
 
+        await updateProfile();
     };
 
     const getProfile = async () => {
@@ -125,7 +110,7 @@ const Profile = () => {
             })
             .catch(function (error) {
                 console.log(error);
-                // display error message here
+                
             });
     };
 
@@ -145,7 +130,6 @@ const Profile = () => {
             })
             .catch(function (error) {
                 console.log(error);
-                setResponseMessage(error.response.data);
             });
     };
 
@@ -209,11 +193,8 @@ const Profile = () => {
                         <Radio value="Zerg-img.png" />
                         Zerg
                     </RadioGroup>
-                    
 
-                    <SubmitBtn>
-                        Update profile
-                    </SubmitBtn>
+                    <SubmitBtn>Update profile</SubmitBtn>
                 </form>
 
                 <ErrorMessage>{responseMessage}</ErrorMessage>
