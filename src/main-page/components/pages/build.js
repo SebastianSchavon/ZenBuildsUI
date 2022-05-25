@@ -35,16 +35,13 @@ const Build = () => {
             ...profile,
             playerRace: e,
         });
-        console.log(profile);
     };
     const onOponentRaceRadioChange = (e) => {
         setProfile({
             ...profile,
             opponentRace: e,
         });
-        console.log(profile);
     };
-
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -52,22 +49,20 @@ const Build = () => {
     };
 
     const createBuild = async () => {
-        console.log(profile);
         await axios
             .post("http://localhost:4000/builds/createBuild", profile, {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: `bearer ${localStorage.getItem("token")}`,
                 },
             })
             .then(function (response) {
                 console.log("Success:", response.data);
-                setResponseMessage(response.data.message);
+                // setResponseMessage(response.data.message);
             })
             .catch(function (error) {
-                console.log(error);
-                setResponseMessage(error.message);
+                console.log("Error: ", error);
+                // setResponseMessage(error.message);
             });
     };
 

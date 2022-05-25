@@ -17,7 +17,6 @@ const Global = () => {
             .get("http://localhost:4000/builds/getAllBuilds", {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: localStorage.getItem("token"),
                 },
             })
@@ -26,8 +25,7 @@ const Global = () => {
                 setGlobalFeed(response.data);
             })
             .catch(function (error) {
-                console.log(error);
-                // display error message here
+                console.log("Error: ",error);
             });
     };
 
