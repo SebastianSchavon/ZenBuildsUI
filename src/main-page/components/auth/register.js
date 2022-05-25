@@ -2,7 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RadioGroup, Radio } from "react-radio-group";
 import axios from "axios";
-import { FormGroup, FormInput, AuthPage, SubmitBtn, ErrorMessage } from "./authElements";
+import {
+    FormGroup,
+    FormInput,
+    AuthPage,
+    SubmitBtn,
+    ErrorMessage,
+} from "./authElements";
 
 const Register = () => {
     const history = useNavigate();
@@ -15,57 +21,43 @@ const Register = () => {
     });
 
     const [formErrors, setFormErrors] = useState({});
-    const [enableSubmit, setEnableSubmit] = useState();
-
 
     const validate = () => {
         const errors = {};
         const regex = /^[a-zA-Z0-9_]+$/i;
-        
+
         if (!registerRequest.Username) {
             errors.Username = "Username is required!";
-            setEnableSubmit(false);
-        }else if(!regex.test(registerRequest.Username)){
+        } else if (!regex.test(registerRequest.Username)) {
             errors.Username = "Only letters, numbers and underscore allowed";
-            setEnableSubmit(false);
-        }else if(registerRequest.Username.length < 3){
-            errors.Username = "Username must be more than 3 characters"
-            setEnableSubmit(false);
-        }else if(registerRequest.Username.length > 12){
-            errors.Username = "Username cannot exceed more than 12 characters"
-            setEnableSubmit(false);
-        }else{
-            setEnableSubmit(true);
+        } else if (registerRequest.Username.length < 3) {
+            errors.Username = "Username must be more than 3 characters";
+        } else if (registerRequest.Username.length > 12) {
+            errors.Username = "Username cannot exceed more than 12 characters";
+        } else {
         }
 
         if (!registerRequest.Password) {
             errors.Password = "Password is required";
-            setEnableSubmit(false);
         } else if (registerRequest.Password.length < 4) {
             errors.Password = "Password must be more than 4 characters";
-            setEnableSubmit(false);
         } else if (registerRequest.Password.length > 12) {
             errors.Password = "Password cannot exceed more than 12 characters";
-            setEnableSubmit(false);
-        } else{
-            setEnableSubmit(true);
+        } else {
         }
 
         if (!registerRequest.ConfirmPassword) {
             errors.ConfirmPassword = "Confirm Password!";
-            setEnableSubmit(false);
-        } else if(registerRequest.Password != registerRequest.ConfirmPassword){
-            errors.ConfirmPassword = "Passwords dont match!"
-            setEnableSubmit(false);
-        } else{
-            setEnableSubmit(true);
+        } else if (
+            registerRequest.Password != registerRequest.ConfirmPassword
+        ) {
+            errors.ConfirmPassword = "Passwords dont match!";
+        } else {
         }
 
         if (!registerRequest.ProfileImage) {
             errors.ProfileImage = "Select main race!";
-            setEnableSubmit(false);
-        } else{
-            setEnableSubmit(true);
+        } else {
         }
 
         return errors;
@@ -76,11 +68,11 @@ const Register = () => {
             .post("http://localhost:4000/users/register", registerRequest, {})
             .then(function (response) {
                 console.log("Success:", response.data);
-                setResponseMessage(response.data.message)
+                setResponseMessage(response.data.message);
             })
             .catch(function (error) {
                 console.log(error.response.data);
-                setResponseMessage(error.response.data)
+                setResponseMessage(error.response.data);
             });
     };
 
@@ -90,7 +82,7 @@ const Register = () => {
             ...registerRequest,
             [e.target.id]: e.target.value,
         });
-        console.log(registerRequest)
+        console.log(registerRequest);
     };
     const onRadioChange = (e) => {
         setRegisterRequest({
@@ -101,13 +93,10 @@ const Register = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        
+
         setFormErrors(validate());
 
-        if(enableSubmit == true){
-            await register(registerRequest);
-        }
-        
+        await register(registerRequest);
     };
     return (
         <AuthPage>
@@ -119,7 +108,6 @@ const Register = () => {
                         placeholder="Username"
                         id="Username"
                         value={registerRequest.Username}
-                        
                         onChange={onChange}
                     />
                     <ErrorMessage>{formErrors.Username}</ErrorMessage>
@@ -132,7 +120,6 @@ const Register = () => {
                         placeholder="Password"
                         id="Password"
                         value={registerRequest.Password}
-                        
                         onChange={onChange}
                     />
                     <ErrorMessage>{formErrors.Password}</ErrorMessage>
@@ -144,7 +131,6 @@ const Register = () => {
                         placeholder="Password"
                         id="ConfirmPassword"
                         value={registerRequest.ConfirmPassword}
-                        
                         onChange={onChange}
                     />
                     <ErrorMessage>{formErrors.ConfirmPassword}</ErrorMessage>
@@ -154,9 +140,8 @@ const Register = () => {
                     onChange={onRadioChange}
                     value={registerRequest.ProfileImage}
                     id="ProfileImage"
-                   
                 >
-                    <Radio value="Terran-img.png" name="race"  />
+                    <Radio value="Terran-img.png" name="race" />
                     Terran
                     <Radio value="Protoss-img.png" name="race" />
                     Protoss
