@@ -4,6 +4,12 @@ export const FormGroup = styled.div`
     margin: 5px;
 `;
 
+export const ErrorMessage = styled.p`
+    margin: 5px;
+    color: red;
+    font-size: 80%;
+`;
+
 export const FormInput = styled.input`
     align-items: center;
     margin-left: 5px;
