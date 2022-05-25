@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FormGroup, FormInput, AuthPage, SubmitBtn, SignupDiv } from "./authElements";
+import { FormGroup, FormInput, AuthPage, SubmitBtn, SignupDiv, ErrorMessage } from "./authElements";
 
 const Login = () => {
     const history = useNavigate();
@@ -39,11 +39,38 @@ const Login = () => {
         });
     };
 
+    const [formErrors, setFormErrors] = useState({});
+    const [enableSubmit, setEnableSubmit] = useState();
 
+
+
+    const validate = () => {
+        const errors = {};
+
+        if (!authenticateRequest.Username) {
+            errors.Username = "Username is required!";
+            setEnableSubmit(false);
+        } else if(authenticateRequest.Username){
+            setEnableSubmit(true);
+        }
+
+        if (!authenticateRequest.Password) {
+            errors.Password = "Password is required";
+            setEnableSubmit(false);
+        } else if(authenticateRequest.Password){
+            setEnableSubmit(true);
+        }
+
+        return errors;
+    };
     
     const onSubmit = async (event) => {
         event.preventDefault();
-        await login(authenticateRequest)
+        setFormErrors(validate());
+        if(enableSubmit == true){
+            await login(authenticateRequest)
+        }
+        
     };
 
     const signUp = () => {
@@ -61,9 +88,10 @@ const Login = () => {
                     placeholder="Username"
                     id="Username"
                     value={authenticateRequest.Username}
-                    required
+                   
                     onChange={onChange}
                 />
+            <ErrorMessage>{formErrors.Username}</ErrorMessage>
             </FormGroup>
             <FormGroup className="form-group">
                 <label htmlFor="name">Password</label>
@@ -72,9 +100,10 @@ const Login = () => {
                     placeholder="Password"
                     id="Password"
                     value={authenticateRequest.Password}
-                    required
+                   
                     onChange={onChange}
                 />
+            <ErrorMessage>{formErrors.Password}</ErrorMessage>  
             </FormGroup>
             <SubmitBtn
                 // button disabled when no value at name or email
@@ -88,7 +117,7 @@ const Login = () => {
             <SignupDiv className="signUp-div">
                 <a onClick={signUp}>Sign up?</a>
             </SignupDiv>
-            <p>{responseMessage}</p>
+            <ErrorMessage>{responseMessage}</ErrorMessage>
         </AuthPage>
     );
 };

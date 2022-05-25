@@ -15,45 +15,57 @@ const Register = () => {
     });
 
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
+    const [enableSubmit, setEnableSubmit] = useState();
 
-    useEffect(() => {
 
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            
-        }
-    }, [formErrors]);
-
-    const validate = (values) => {
+    const validate = () => {
         const errors = {};
         const regex = /^[a-zA-Z0-9_]+$/i;
-
-        if (!values.Username) {
+        
+        if (!registerRequest.Username) {
             errors.Username = "Username is required!";
-        }else if(!regex.test(values.Username)){
+            setEnableSubmit(false);
+        }else if(!regex.test(registerRequest.Username)){
             errors.Username = "Only letters, numbers and underscore allowed";
+            setEnableSubmit(false);
         }else if(registerRequest.Username.length < 3){
             errors.Username = "Username must be more than 3 characters"
+            setEnableSubmit(false);
         }else if(registerRequest.Username.length > 12){
             errors.Username = "Username cannot exceed more than 12 characters"
+            setEnableSubmit(false);
+        }else{
+            setEnableSubmit(true);
         }
 
         if (!registerRequest.Password) {
             errors.Password = "Password is required";
+            setEnableSubmit(false);
         } else if (registerRequest.Password.length < 4) {
             errors.Password = "Password must be more than 4 characters";
+            setEnableSubmit(false);
         } else if (registerRequest.Password.length > 12) {
             errors.Password = "Password cannot exceed more than 12 characters";
+            setEnableSubmit(false);
+        } else{
+            setEnableSubmit(true);
         }
 
         if (!registerRequest.ConfirmPassword) {
             errors.ConfirmPassword = "Confirm Password!";
+            setEnableSubmit(false);
         } else if(registerRequest.Password != registerRequest.ConfirmPassword){
             errors.ConfirmPassword = "Passwords dont match!"
+            setEnableSubmit(false);
+        } else{
+            setEnableSubmit(true);
         }
 
         if (!registerRequest.ProfileImage) {
             errors.ProfileImage = "Select main race!";
+            setEnableSubmit(false);
+        } else{
+            setEnableSubmit(true);
         }
 
         return errors;
@@ -64,10 +76,11 @@ const Register = () => {
             .post("http://localhost:4000/users/register", registerRequest, {})
             .then(function (response) {
                 console.log("Success:", response.data);
-                history("/login");
+                setResponseMessage(response.data.message)
             })
             .catch(function (error) {
                 console.log(error.response.data);
+                setResponseMessage(error.response.data)
             });
     };
 
@@ -88,9 +101,13 @@ const Register = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        setFormErrors(validate(registerRequest));
-        setIsSubmit(true);
-        await register(registerRequest);
+        
+        setFormErrors(validate());
+
+        if(enableSubmit == true){
+            await register(registerRequest);
+        }
+        
     };
     return (
         <AuthPage>
@@ -124,7 +141,7 @@ const Register = () => {
                     <label htmlFor="Password">Confirm Password</label>
                     <FormInput
                         type="password"
-                        
+                        placeholder="Password"
                         id="ConfirmPassword"
                         value={registerRequest.ConfirmPassword}
                         

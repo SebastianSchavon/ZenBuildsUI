@@ -14,7 +14,11 @@ export const FormInput = styled.input`
     margin: 5px;
 `;
 
-
+export const ErrorMessage = styled.p`
+    margin: 5px;
+    color: red;
+    font-size: 80%;
+`;
 
 export const DescriptionTextArea = styled.textarea`
     align-items: center;
