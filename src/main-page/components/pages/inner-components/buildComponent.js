@@ -26,7 +26,7 @@ const BuildComponent = ({ build }) => {
     };
 
     useEffect(() => {
-        console.log(build);
+       
     }, [null]);
 
     const LikeBuild = async (buildId, data) => {

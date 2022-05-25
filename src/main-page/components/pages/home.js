@@ -34,7 +34,7 @@ const Home = () => {
     return (
         <Page>
             {HomeFeed.map((build, index) => (
-                <BuildComponent build = {build}/>
+                <BuildComponent key={index} build = {build}/>
             ))}
         </Page>
     );

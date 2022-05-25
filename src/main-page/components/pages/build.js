@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { RadioGroup, Radio } from "react-radio-group";
-import { useLocation, useSearchParams, useParams } from "react-router-dom";
 import axios from "axios";
 import {
     FormGroup,
@@ -11,10 +10,12 @@ import {
     SubmitBtn,
     VersusDiv,
     VS,
+    ErrorMessage,
+    ErrorMessageDiv
 } from "./pages-elements/buildElements";
 
 const Build = () => {
-    const [profile, setProfile] = useState({
+    const [build, setBuild] = useState({
         title: "",
         playerRace: "",
         opponentRace: "",
@@ -23,34 +24,69 @@ const Build = () => {
 
     const [responseMessage, setResponseMessage] = useState();
 
+    const [formErrors, setFormErrors] = useState({});
+
+    const validate = () => {
+        const errors = {};
+
+        if (!build.title) {
+            errors.Title = "Title is required!";
+        } else if (build.title.length < 4) {
+            errors.Title = "Title must be more than 4 characters";
+        } else if (build.title.length > 12) {
+            errors.Title = "Title cannot exceed more than 50 characters";
+        } else {
+        }
+
+        if (!build.content) {
+            errors.Content = "Build Order content is required!";
+        } else if (build.content.length < 8) {
+            errors.Content = "Build must be more than 8 characters";
+        } else if (build.content.length > 250) {
+            errors.Content = "Build cannot exceed more than 250 characters";
+        } else {
+        }
+
+        if (!build.playerRace) {
+            errors.PlayerRace = "Select player race!";
+        }
+
+        if (!build.opponentRace) {
+            errors.OpponentRace = "Select opponent race!";
+        }
+
+        return errors;
+    };
+
     const onChange = (e) => {
-        setProfile({
-            ...profile,
+        setBuild({
+            ...build,
             [e.target.id]: e.target.value,
         });
     };
 
     const onPlayerRaceChange = (e) => {
-        setProfile({
-            ...profile,
+        setBuild({
+            ...build,
             playerRace: e,
         });
     };
     const onOponentRaceRadioChange = (e) => {
-        setProfile({
-            ...profile,
+        setBuild({
+            ...build,
             opponentRace: e,
         });
     };
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        await createBuild(profile);
+        setFormErrors(validate());
+        await createBuild(build);
     };
 
     const createBuild = async () => {
         await axios
-            .post("http://localhost:4000/builds/createBuild", profile, {
+            .post("http://localhost:4000/builds/createBuild", build, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `bearer ${localStorage.getItem("token")}`,
@@ -78,22 +114,24 @@ const Build = () => {
                             id="title"
                             onChange={onChange}
                         />
+                        <ErrorMessage>{formErrors.Title}</ErrorMessage>
                     </FormGroup>
 
                     <FormGroup className="form-group">
-                        <label htmlFor="description">Build Order</label>
+                        <label htmlFor="content">Build Order</label>
                         <BuildTextArea
                             type="text"
                             placeholder="Build Order"
                             id="content"
                             onChange={onChange}
                         />
+                        <ErrorMessage>{formErrors.Content}</ErrorMessage>
                     </FormGroup>
                     <VersusDiv>
                         <RadioGroup
                             name="race"
                             onChange={onPlayerRaceChange}
-                            value={profile.playerRace}
+                            value={build.playerRace}
                         >
                             <Radio value="Terran" />
                             Terran
@@ -106,7 +144,7 @@ const Build = () => {
                         <RadioGroup
                             name="race2"
                             onChange={onOponentRaceRadioChange}
-                            value={profile.opponentRace}
+                            value={build.opponentRace}
                         >
                             <Radio value="Terran" />
                             Terran
@@ -118,6 +156,10 @@ const Build = () => {
                             Any
                         </RadioGroup>
                     </VersusDiv>
+                    <ErrorMessageDiv>
+                        <ErrorMessage>{formErrors.PlayerRace}</ErrorMessage>
+                        <ErrorMessage>{formErrors.OpponentRace}</ErrorMessage>
+                    </ErrorMessageDiv>
 
                     <SubmitBtn>Post Build Order</SubmitBtn>
                     <p>{responseMessage}</p>

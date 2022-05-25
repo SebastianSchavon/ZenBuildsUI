@@ -37,8 +37,8 @@ const Leaderboard = () => {
 
     return (
         <LeaderboardList>
-            {Leaderboard.map((user) => (
-                <NavLink to={"/user/" + user.id}>
+            {Leaderboard.map((user, index) => (
+                <NavLink key={index} to={"/user/" + user.id}>
                     <LeaderboardRow>
                         <ProfileImage  src={`${process.env.PUBLIC_URL}/${user.profileImage}`}/>
                         <Username>{user.username}</Username>

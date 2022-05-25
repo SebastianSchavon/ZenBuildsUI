@@ -16,8 +16,8 @@ import {
 const FollowerComponent = ({ date, follower }) => {
     const [visibillity, setVisibillity] = useState(false);
 
-    const onTitleClick = (e) => {
-        setVisibillity(!visibillity);
+    const onUserClick = (e) => {
+        window.location.reload(false);
     };
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const FollowerComponent = ({ date, follower }) => {
 
     return (
         <div>
-            <NavLink to={"/user/" + follower.id}>
+            <NavLink to={"/user/" + follower.id} onClick={onUserClick}>
                 <FollowerRow>
                     <UserDiv>
                         <ProfileImage

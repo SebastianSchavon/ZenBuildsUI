@@ -66,3 +66,14 @@ export const VS = styled.p`
     margin-left: 2rem;
     margin-right: 2rem;
 `;
+
+export const ErrorMessage = styled.p`
+    margin: 5px;
+    color: red;
+    font-size: 80%;
+`;
+
+export const ErrorMessageDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
