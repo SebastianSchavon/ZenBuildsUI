@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { RadioGroup, Radio } from "react-radio-group";
 import axios from "axios";
 import {
@@ -11,7 +10,6 @@ import {
 } from "./authElements";
 
 const Register = () => {
-    const history = useNavigate();
     const [responseMessage, setResponseMessage] = useState();
     const [registerRequest, setRegisterRequest] = useState({
         Username: "",
@@ -68,21 +66,20 @@ const Register = () => {
             .post("http://localhost:4000/users/register", registerRequest, {})
             .then(function (response) {
                 console.log("Success:", response.data);
-                setResponseMessage(response.data.message);
+                // setResponseMessage(response.data.message);
             })
             .catch(function (error) {
                 console.log(error.response.data);
-                setResponseMessage(error.response.data);
+                // setResponseMessage(error.response.data);
             });
     };
 
-    // updates authenticareRequest data on change
     const onChange = (e) => {
         setRegisterRequest({
             ...registerRequest,
             [e.target.id]: e.target.value,
         });
-        console.log(registerRequest);
+        
     };
     const onRadioChange = (e) => {
         setRegisterRequest({
@@ -93,7 +90,6 @@ const Register = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-
         setFormErrors(validate());
 
         await register(registerRequest);
@@ -149,16 +145,7 @@ const Register = () => {
                     Zerg
                 </RadioGroup>
                 <ErrorMessage>{formErrors.ProfileImage}</ErrorMessage>
-                <SubmitBtn
-                    className="btn btn-primary mt-2"
-                    // button disabled when no value at name or email
-                    // disabled={
-                    //     !registerRequest.Username &&
-                    //     !registerRequest.Password &&
-                    //     !registerRequest.Species &&
-                    //     !registerRequest
-                    // }
-                >
+                <SubmitBtn>
                     Register
                 </SubmitBtn>
                 <ErrorMessage>{responseMessage}</ErrorMessage>

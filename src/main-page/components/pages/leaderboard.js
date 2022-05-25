@@ -22,7 +22,6 @@ const Leaderboard = () => {
             .get("http://localhost:4000/users/getTop20Users", {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: localStorage.getItem("token"),
                 },
             })
@@ -31,7 +30,7 @@ const Leaderboard = () => {
                 setLeaderboard(response.data);
             })
             .catch(function (error) {
-                console.log(error);
+                console.log("Error: ", error);
                 // display error message here
             });
     };

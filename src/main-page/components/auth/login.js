@@ -58,14 +58,12 @@ const Login = () => {
                 window.location.reload(false);
             })
             .catch(function (error) {
-                console.log(error);
+                console.log("Error: ", error);
                 logAuthentication(false);
-                console.log(userlogRequest)
             });
     };
 
     const logAuthentication = async (authSuccessful) => {
-        console.log(userlogRequest)
         await axios
             .post("http://localhost:4000/userlogs/logAuthentication", {
                 ...userlogRequest,
@@ -74,7 +72,7 @@ const Login = () => {
                 console.log("Success:", response.data);
             })
             .catch(function (error) {
-                console.log(error);
+                console.log("Error: ", error);
             });
     };
 
@@ -110,13 +108,9 @@ const Login = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        
         setFormErrors(validate(authenticateRequest));
 
-
-
         await login(authenticateRequest);
-        
         await logAuthentication(userlogRequest);
         
     };

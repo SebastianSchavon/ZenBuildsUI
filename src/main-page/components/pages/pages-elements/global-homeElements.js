@@ -16,7 +16,6 @@ export const BuildDiv = styled.div`
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid beige;
-    /* border: 1px solid beige; */
 `;
 
 export const Content = styled.p`
@@ -24,7 +23,6 @@ export const Content = styled.p`
     border: 1px solid beige;
     font-size: 110%;
     background: rgba(249, 241, 239, 0.3);
-    /* min-height: 40vh; */
     text-align: center;
     width: 100%;
     margin-left: auto;

@@ -96,7 +96,6 @@ const Profile = () => {
             .get("http://localhost:4000/users/getAuthenticatedUser", {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: localStorage.getItem("token"),
                 },
             })
@@ -109,7 +108,7 @@ const Profile = () => {
                 });
             })
             .catch(function (error) {
-                console.log(error);
+                console.log("Error: ", error);
                 
             });
     };
@@ -120,16 +119,15 @@ const Profile = () => {
             .patch("http://localhost:4000/users/update", profile, {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: `bearer ${localStorage.getItem("token")}`,
                 },
             })
             .then(function (response) {
                 console.log("Success:", response.data);
-                setResponseMessage(response.data.message);
+                // setResponseMessage(response.data.message);
             })
             .catch(function (error) {
-                console.log(error);
+                console.log("Error: ", error);
             });
     };
 

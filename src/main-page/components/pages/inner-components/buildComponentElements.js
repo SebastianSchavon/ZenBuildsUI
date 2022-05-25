@@ -16,13 +16,11 @@ export const BuildDiv = styled.div`
     flex-direction: column;
     border-bottom: 1px solid beige;
     text-align: center;
-    /* border: 1px solid beige; */
 `;
 
 export const UserDiv = styled.div`
     display: flex;
     flex-direction: row;
-
 `;
 
 export const ExpandButton = styled.button`
@@ -37,23 +35,16 @@ export const ExpandButton = styled.button`
 
 export const Content = styled.p`
     white-space: pre-wrap;
-    
     font-size: 110%;
-    
-    /* min-height: 40vh; */
     text-align: start;
-
-    
-    margin-top: 1REM;
-    margin-bottom: 1REM;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     margin-left: auto;
     margin-right: auto;
     transition: 0.3s ease-in-out;
     opacity: ${(props) => (props.value ? "100%" : "0")};
     min-height: ${(props) => (props.value ? "40vh" : "0")};
     height: ${(props) => (props.value ? "100%" : "0")};
-    /* margin-top: ${(props) => (props.value ? "1rem" : "0")};
-    margin-top: ${(props) => (props.value ? "1rem" : "0")}; */
     padding: ${(props) => (props.value ? "1.5rem" : "0")};
 `;
 
@@ -73,17 +64,13 @@ export const BuildInfo = styled.p`
 `;
 
 export const LikesCount = styled.p`
-    
     margin-top: 0.5rem;
-    color:#EF4848;
+    color: #ef4848;
 
-
-    
     &:hover {
         cursor: pointer;
     }
 `;
-
 
 export const UsernameDisplay = styled.p`
     font-size: 80%;
@@ -95,7 +82,6 @@ export const ContentHeader = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
 `;
 
 export const Page = styled.section``;
@@ -116,5 +102,4 @@ export const UserHeader = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-   
 `;

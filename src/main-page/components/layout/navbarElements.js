@@ -53,13 +53,8 @@ export const NavMenu = styled.div`
     margin-right: -24px;
 
     @media screen and (max-width: 768px){
-        /* display: ${props => props.value ? 'none' : 'flex'}; */
         display: none;
-        /* margin-top: 70px;
-        flex-direction: column;
-        position: absolute;
-        width: 100%;
-        background:beige; */
+
     }
 `
 

@@ -26,7 +26,7 @@ const Home = () => {
                 setHomeFeed(response.data);
             })
             .catch(function (error) {
-                console.log(error);
+                console.log("Error: ", error);
                 // display error message here
             });
     };

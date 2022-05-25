@@ -12,8 +12,6 @@ export const SidebarContainer = styled.aside`
     align-items: center;
     left: 0;
     transition: 0.3s ease-in-out;
-    /* opacity: ${({ visibillity }) => (visibillity ? '100%' : '0')};
-    top: ${({ visibillity }) => (visibillity ? '0' : '-100%')};  */
     opacity: ${props => props.value ? '100%' : '0'};
     top: ${props => props.value ? '0' : '-100%'};
 `

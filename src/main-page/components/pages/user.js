@@ -28,7 +28,7 @@ const User = () => {
     }, [null]);
 
     const [user, setUser] = useState([]);
-    // const [userBuilds, setUserBuilds] = useState([]);
+
     const [userFollowers, setUserFollowers] = useState([]);
     const [userFollowing, setUserFollowing] = useState([]);
 
@@ -44,7 +44,6 @@ const User = () => {
             .get("http://localhost:4000/users/getUserByUserId/" + id, {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: localStorage.getItem("token"),
                 },
             })
@@ -52,13 +51,11 @@ const User = () => {
                 console.log("Success:", response.data);
                 setUser(response.data);
                 followCheck(response.data.id);
-                // getUserBuilds(response.data.id);
                 getUserFollowers(response.data.id);
                 getUserFollowing(response.data.id);
             })
             .catch(function (error) {
-                console.log(error);
-                // display error message here
+                console.log("Error: ", error);
             });
     };
 
@@ -67,7 +64,6 @@ const User = () => {
             .get("http://localhost:4000/followers/followCheck/" + id, {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: localStorage.getItem("token"),
                 },
             })
@@ -80,8 +76,7 @@ const User = () => {
                 }
             })
             .catch(function (error) {
-                console.log(error);
-                // display error message here
+                console.log("Error: ", error);
             });
     };
 
@@ -90,7 +85,6 @@ const User = () => {
             .post("http://localhost:4000/followers/addFollow/" + id, data, {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: `bearer ${localStorage.getItem("token")}`,
                 },
             })
@@ -100,7 +94,7 @@ const User = () => {
             })
             .catch(function (error) {
                 console.log(error);
-                setResponseMessage(error.response.data);
+                // setResponseMessage(error.response.data);
             });
     };
 
@@ -109,7 +103,6 @@ const User = () => {
             .delete("http://localhost:4000/followers/removeFollow/" + id, {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: `bearer ${localStorage.getItem("token")}`,
                 },
             })
@@ -118,7 +111,7 @@ const User = () => {
                 window.location.reload(false);
             })
             .catch(function (error) {
-                console.log(error);
+                console.log("Error: ", error);
             });
     };
 
@@ -127,7 +120,6 @@ const User = () => {
             .get("http://localhost:4000/followers/getUserFollowing/" + id, {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: localStorage.getItem("token"),
                 },
             })
@@ -136,8 +128,7 @@ const User = () => {
                 setUserFollowing(response.data);
             })
             .catch(function (error) {
-                console.log(error);
-                // display error message here
+                console.log("Error: ", error);
             });
     };
     const getUserFollowers = async (id) => {
@@ -145,7 +136,6 @@ const User = () => {
             .get("http://localhost:4000/followers/getUserFollowers/" + id, {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: localStorage.getItem("token"),
                 },
             })
@@ -154,8 +144,7 @@ const User = () => {
                 setUserFollowers(response.data);
             })
             .catch(function (error) {
-                console.log(error);
-                // display error message here
+                console.log("Error: ", error);
             });
     };
 
@@ -181,7 +170,7 @@ const User = () => {
                 )}
                 <p>{responseMessage}</p>
             </UserDiv>
-            
+
             <BuildsFollowers>
                 <FollowersP
                     value={followingFollowers}
@@ -200,14 +189,20 @@ const User = () => {
             <ListSection>
                 {followingFollowers ? (
                     <FollowersDiv>
-                    {userFollowers.map((follower, index) => (
-                        <FollowerComponent date={follower.followDate} follower={follower.user_User} />
-                    ))}
-                </FollowersDiv>
+                        {userFollowers.map((follower, index) => (
+                            <FollowerComponent
+                                date={follower.followDate}
+                                follower={follower.user_User}
+                            />
+                        ))}
+                    </FollowersDiv>
                 ) : (
                     <FollowersDiv>
                         {userFollowing.map((follower, index) => (
-                            <FollowerComponent date={follower.followDate} follower={follower.follower_User} />
+                            <FollowerComponent
+                                date={follower.followDate}
+                                follower={follower.follower_User}
+                            />
                         ))}
                     </FollowersDiv>
                 )}
