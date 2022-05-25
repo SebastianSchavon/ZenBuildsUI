@@ -26,10 +26,16 @@ const Register = () => {
 
     const validate = (values) => {
         const errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i; // <-- change to allow only alphanumeric and underscore and pass to username
+        const regex = /^[a-zA-Z0-9_]+$/i;
 
         if (!values.Username) {
             errors.Username = "Username is required!";
+        }else if(!regex.test(values.Username)){
+            errors.Username = "Only letters, numbers and underscore allowed";
+        }else if(registerRequest.Username.length < 3){
+            errors.Username = "Username must be more than 3 characters"
+        }else if(registerRequest.Username.length > 12){
+            errors.Username = "Username cannot exceed more than 12 characters"
         }
 
         if (!registerRequest.Password) {
@@ -42,6 +48,8 @@ const Register = () => {
 
         if (!registerRequest.ConfirmPassword) {
             errors.ConfirmPassword = "Confirm Password!";
+        } else if(registerRequest.Password != registerRequest.ConfirmPassword){
+            errors.ConfirmPassword = "Passwords dont match!"
         }
 
         if (!registerRequest.ProfileImage) {
