@@ -13,6 +13,7 @@ import {
 const Login = () => {
     const history = useNavigate();
     const [responseMessage, setResponseMessage] = useState();
+    const [submitEnabled, setSubmitEnabled] = useState(true);
 
     useEffect(() => {
         getIp();
@@ -95,12 +96,16 @@ const Login = () => {
 
         if (!authenticateRequest.Username) {
             errors.Username = "Username is required!";
-        } else if (authenticateRequest.Username) {
+            setSubmitEnabled(false);
+        } else {
+            setSubmitEnabled(true);
         }
 
         if (!authenticateRequest.Password) {
             errors.Password = "Password is required";
-        } else if (authenticateRequest.Password) {
+            setSubmitEnabled(false);
+        } else {
+            setSubmitEnabled(true);
         }
 
         return errors;
@@ -110,8 +115,11 @@ const Login = () => {
         event.preventDefault();
         setFormErrors(validate(authenticateRequest));
 
-        await login(authenticateRequest);
-        await logAuthentication(userlogRequest);
+        if(submitEnabled){
+            login(authenticateRequest);
+            logAuthentication(userlogRequest);
+        }
+
         
     };
 

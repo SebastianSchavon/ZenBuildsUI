@@ -23,39 +23,49 @@ const Build = () => {
     });
 
     const [responseMessage, setResponseMessage] = useState();
-
+    // const [submitEnabled, setSubmitEnabled] = useState(false);
     const [formErrors, setFormErrors] = useState({});
 
     const validate = () => {
         const errors = {};
+        let isValue = true;
+        
 
         if (!build.title) {
             errors.Title = "Title is required!";
-        } else if (build.title.length < 4) {
-            errors.Title = "Title must be more than 4 characters";
-        } else if (build.title.length > 12) {
-            errors.Title = "Title cannot exceed more than 50 characters";
-        } else {
-        }
+            isValue = false;
+        } else if (build.title.length < 6) {
+            errors.Title = "Title must be more than 6 characters";
+            isValue = false;
+        } else if (build.title.length > 250) {
+            errors.Title = "Title cannot exceed more than 150 characters";
+            isValue = false;
+        } 
 
         if (!build.content) {
             errors.Content = "Build Order content is required!";
+            isValue = false;
         } else if (build.content.length < 8) {
             errors.Content = "Build must be more than 8 characters";
-        } else if (build.content.length > 250) {
-            errors.Content = "Build cannot exceed more than 250 characters";
-        } else {
-        }
+            isValue = false;
+        } else if (build.content.length > 2500) {
+            errors.Content = "Build cannot exceed more than 2500 characters";
+            isValue = false;
+        } 
 
         if (!build.playerRace) {
             errors.PlayerRace = "Select player race!";
+            isValue = false;
         }
 
         if (!build.opponentRace) {
             errors.OpponentRace = "Select opponent race!";
+            isValue = false;
         }
 
-        return errors;
+        setFormErrors(errors);
+
+        return isValue;
     };
 
     const onChange = (e) => {
@@ -78,10 +88,14 @@ const Build = () => {
         });
     };
 
-    const onSubmit = async (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
-        setFormErrors(validate());
-        await createBuild(build);
+        
+        
+        if(validate()){
+            createBuild(build);
+        }
+
     };
 
     const createBuild = async () => {

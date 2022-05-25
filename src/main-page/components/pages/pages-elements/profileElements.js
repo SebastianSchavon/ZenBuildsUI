@@ -1,5 +1,12 @@
 import styled from "styled-components";
-import {RadioGroup, Radio} from 'react-radio-group'
+import { NavLink as Link } from 'react-router-dom'
+
+export const NavLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+
+
+`
 
 export const FormGroup = styled.div`
     margin: 5px;
