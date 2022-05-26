@@ -18,6 +18,7 @@ import {
     BuildsFollowers,
     FollowersP,
     BuildsP,
+    ErrorMessage
 } from "./pages-elements/userElements.js";
 import BuildComponent from "./inner-components/buildComponent";
 import FollowerComponent from "./inner-components/followerComponent";
@@ -33,9 +34,9 @@ const User = () => {
     const [userFollowing, setUserFollowing] = useState([]);
 
     const [visibillity, setVisibillity] = useState(false);
-    const [followingFollowers, setFollowingFollowers] = useState(false);
+    const [followingFollowers, setFollowingFollowers] = useState(true);
 
-    const [responseMessage, setResponseMessage] = useState();
+    const [errorMessage, setErrorMessage] = useState();
 
     const { id } = useParams();
 
@@ -94,7 +95,7 @@ const User = () => {
             })
             .catch(function (error) {
                 console.log(error);
-                // setResponseMessage(error.response.data);
+                setErrorMessage(error.response.data);
             });
     };
 
@@ -168,7 +169,7 @@ const User = () => {
                         Follow
                     </FollowButton>
                 )}
-                <p>{responseMessage}</p>
+                <ErrorMessage>{errorMessage}</ErrorMessage>
             </UserDiv>
 
             <BuildsFollowers>

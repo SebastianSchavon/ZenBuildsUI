@@ -102,3 +102,9 @@ export const BuildsP = styled.p`
     opacity: ${props => props.value ? '40%' : '100%'};
     margin-left: 2.5rem;
 `;
+
+export const ErrorMessage = styled.p`
+    margin: 5px;
+    color: red;
+    font-size: 80%;
+`;

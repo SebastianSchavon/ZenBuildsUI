@@ -7,10 +7,12 @@ import {
   AuthPage,
   SubmitBtn,
   ErrorMessage,
+  SuccessMessage
 } from "./authElements";
 
 const Register = () => {
-  const [responseMessage, setResponseMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState();
+  const [successMessage, setSuccessMessage] = useState();
   const [registerRequest, setRegisterRequest] = useState({
     Username: "",
     Password: "",
@@ -19,59 +21,53 @@ const Register = () => {
   });
 
   const [formErrors, setFormErrors] = useState({});
-  const [submitEnabled, setSubmitEnabled] = useState(true);
 
   const validate = () => {
     const errors = {};
     const regex = /^[a-zA-Z0-9_]+$/i;
+    let isValue = true;
 
     if (!registerRequest.Username) {
       errors.Username = "Username is required!";
-      setSubmitEnabled(false);
+      isValue = false;
     } else if (!regex.test(registerRequest.Username)) {
       errors.Username = "Only letters, numbers and underscore allowed";
-      setSubmitEnabled(false);
+      isValue = false;
     } else if (registerRequest.Username.length < 3) {
       errors.Username = "Username must be more than 3 characters";
-      setSubmitEnabled(false);
+      isValue = false;
     } else if (registerRequest.Username.length > 12) {
       errors.Username = "Username cannot exceed more than 12 characters";
-      setSubmitEnabled(false);
-    } else {
-      setSubmitEnabled(true);
-    }
+      isValue = false;
+    } 
 
     if (!registerRequest.Password) {
       errors.Password = "Password is required";
-      setSubmitEnabled(false);
+      isValue = false;
     } else if (registerRequest.Password.length < 4) {
       errors.Password = "Password must be more than 4 characters";
-      setSubmitEnabled(false);
+      isValue = false;
     } else if (registerRequest.Password.length > 12) {
       errors.Password = "Password cannot exceed more than 12 characters";
-      setSubmitEnabled(false);
-    } else {
-      setSubmitEnabled(true);
-    }
+      isValue = false;
+    } 
 
     if (!registerRequest.ConfirmPassword) {
       errors.ConfirmPassword = "Confirm Password!";
-      setSubmitEnabled(false);
+      isValue = false;
     } else if (registerRequest.Password != registerRequest.ConfirmPassword) {
       errors.ConfirmPassword = "Passwords dont match!";
-      setSubmitEnabled(false);
-    } else {
-      setSubmitEnabled(true);
-    }
+      isValue = false;
+    } 
 
     if (!registerRequest.ProfileImage) {
       errors.ProfileImage = "Select main race!";
-      setSubmitEnabled(false);
-    } else {
-      setSubmitEnabled(true);
-    }
+      isValue = false;
+    } 
 
-    return errors;
+    setFormErrors(errors);
+
+    return isValue;
   };
 
   const register = async (registerRequest) => {
@@ -79,11 +75,13 @@ const Register = () => {
       .post("http://localhost:4000/users/register", registerRequest, {})
       .then(function (response) {
         console.log("Success:", response.data);
-        setResponseMessage(response.data.message);
+        setSuccessMessage(response.data.message);
+        setErrorMessage("")
       })
       .catch(function (error) {
         console.log(error.response.data);
-        setResponseMessage(error.response.data);
+        setErrorMessage(error.response.data);
+        setSuccessMessage("")
       });
   };
 
@@ -102,8 +100,10 @@ const Register = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setFormErrors(validate());
-    if (submitEnabled) {
+    setErrorMessage("");
+    setSuccessMessage("");
+    
+    if (validate()) {
       register(registerRequest);
     }
   };
@@ -159,7 +159,8 @@ const Register = () => {
         </RadioGroup>
         <ErrorMessage>{formErrors.ProfileImage}</ErrorMessage>
         <SubmitBtn>Register</SubmitBtn>
-        <ErrorMessage>{responseMessage}</ErrorMessage>
+        <SuccessMessage>{successMessage}</SuccessMessage>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
       </form>
     </AuthPage>
   );

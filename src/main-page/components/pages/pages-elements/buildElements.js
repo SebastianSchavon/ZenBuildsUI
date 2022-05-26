@@ -72,6 +72,11 @@ export const ErrorMessage = styled.p`
     color: red;
     font-size: 80%;
 `;
+export const SuccessMessage = styled.p`
+    margin: 5px;
+    color: green;
+    font-size: 80%;
+`;
 
 export const ErrorMessageDiv = styled.div`
     display: flex;

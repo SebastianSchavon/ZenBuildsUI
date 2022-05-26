@@ -26,6 +26,11 @@ export const ErrorMessage = styled.p`
     color: red;
     font-size: 80%;
 `;
+export const SuccessMessage = styled.p`
+    margin: 5px;
+    color: green;
+    font-size: 80%;
+`;
 
 export const DescriptionTextArea = styled.textarea`
     align-items: center;

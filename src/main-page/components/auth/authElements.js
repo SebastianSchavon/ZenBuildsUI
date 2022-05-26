@@ -9,6 +9,11 @@ export const ErrorMessage = styled.p`
     color: red;
     font-size: 80%;
 `;
+export const SuccessMessage = styled.p`
+    margin: 5px;
+    color: green;
+    font-size: 80%;
+`;
 
 export const FormInput = styled.input`
     align-items: center;
@@ -41,4 +46,6 @@ export const SignupDiv = styled.div`
         cursor: pointer;
     }
 `;
+
+
 

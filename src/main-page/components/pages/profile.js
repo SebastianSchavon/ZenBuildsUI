@@ -10,6 +10,7 @@ import {
   ProfileSection,
   SubmitBtn,
   ErrorMessage,
+  SuccessMessage,
   NavLink,
 } from "./pages-elements/profileElements";
 
@@ -22,55 +23,59 @@ const Profile = () => {
     profileImage: "",
   });
   const [profileId, setProfileId] = useState();
-  const [submitEnabled, setSubmitEnabled] = useState(true);
   const [formErrors, setFormErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState();
+  const [successMessage, setSuccessMessage] = useState();
 
   const validate = (values) => {
-    console.log(values);
+    let isValue = true;
     const errors = {};
     const regex = /^[a-zA-Z0-9_]+$/i;
 
-    if (!values.username && values.username != profile.username) {
+    if (!profile.username && profile.username != profile.username) {
       errors.Username = "Username is required!";
-      setSubmitEnabled(false);
-    } else if (!regex.test(values.username)) {
+      isValue = false;
+    } else if (!regex.test(profile.username)) {
       errors.Username = "Only letters, numbers and underscore allowed";
-      setSubmitEnabled(false);
-    } else if (values.username.length < 3) {
+      isValue = false;
+    } else if (profile.username.length < 3) {
       errors.Username = "Username must be more than 3 characters";
-      setSubmitEnabled(false);
-    } else if (values.username.length > 12) {
+      isValue = false;
+    } else if (profile.username.length > 12) {
       errors.Username = "Username cannot exceed more than 12 characters";
-      setSubmitEnabled(false);
-    } else {
-      setSubmitEnabled(true);
-    }
+      isValue = false;
+    } 
 
     if (profile.newPassword || profile.oldPassword) {
-      if (!values.oldPassword) {
+      if (!profile.oldPassword) {
         errors.OldPassword = "Old password is required";
-        setSubmitEnabled(false);
+        isValue = false;
       }
-      if (!values.newPassword) {
+      if (!profile.newPassword) {
         errors.NewPassword = "New password is required";
-        setSubmitEnabled(false);
-      } else if (values.newPassword.length < 4) {
+        isValue = false;
+      } else if (profile.newPassword.length < 4) {
         errors.NewPassword = "Password must be more than 4 characters";
-        setSubmitEnabled(false);
-      } else if (values.newPassword.length > 12) {
+        isValue = false;
+      } else if (profile.newPassword.length > 12) {
         errors.NewPassword = "Password cannot exceed more than 12 characters";
-        setSubmitEnabled(false);
-      } else {
-        setSubmitEnabled(true);
-      }
+        isValue = false;
+      } 
     }
 
-    return errors;
+    if (!profile.profileImage) {
+      errors.ProfileImage = "Select main race!";
+      isValue = false;
+    }
+
+    setFormErrors(errors);
+
+    return isValue;
   };
 
   const history = useNavigate();
 
-  const [responseMessage, setResponseMessage] = useState();
+  
 
   useEffect(() => {
     getProfile();
@@ -97,9 +102,10 @@ const Profile = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setFormErrors(validate(profile));
+    setErrorMessage("");
+    setSuccessMessage("");
 
-    if (submitEnabled) {
+    if (validate(profile)) {
       updateProfile();
     }
   };
@@ -137,10 +143,13 @@ const Profile = () => {
       })
       .then(function (response) {
         console.log("Success:", response.data);
-        // setResponseMessage(response.data.message);
+        setSuccessMessage(response.data.message);
+        setErrorMessage("");
       })
       .catch(function (error) {
         console.log("Error: ", error);
+        setErrorMessage(error.message);
+        setSuccessMessage("");
       });
   };
 
@@ -204,9 +213,10 @@ const Profile = () => {
             <Radio value="Zerg-img.png" />
             Zerg
           </RadioGroup>
+          <ErrorMessage>{formErrors.ProfileImage}</ErrorMessage>
         </form>
-
-        <ErrorMessage>{responseMessage}</ErrorMessage>
+        <SuccessMessage>{successMessage}</SuccessMessage>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
         <SubmitBtn onClick={onSubmit}>Update profile</SubmitBtn>
         <NavLink to={"/user/" + profileId}>
           <SubmitBtn>View Profile</SubmitBtn>
