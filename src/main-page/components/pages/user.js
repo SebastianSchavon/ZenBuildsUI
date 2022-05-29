@@ -42,7 +42,7 @@ const User = () => {
   const { id } = useParams();
 
   const onUserClick = (e) => {
-    window.location.reload(true);
+   
   };
 
   const getUser = async () => {
