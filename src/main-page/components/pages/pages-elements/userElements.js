@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 
+export const NavLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+`;
+
 export const UserDiv = styled.div`
     display: flex;
     flex-direction: column;
@@ -96,11 +101,19 @@ export const BuildsFollowers = styled.div`
 export const FollowersP = styled.p`
     opacity: ${props => props.value ? '100%' : '40%'};
     margin-right: 2.5rem;
+
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 export const BuildsP = styled.p`
     opacity: ${props => props.value ? '40%' : '100%'};
     margin-left: 2.5rem;
+
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 export const ErrorMessage = styled.p`

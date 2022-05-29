@@ -26,8 +26,6 @@ export const UserDiv = styled.div`
 export const ExpandButton = styled.button`
     background: 0;
     border: 0;
-    width: 6rem;
-    height: 2.5rem;
     &:hover {
         cursor: pointer;
     }
