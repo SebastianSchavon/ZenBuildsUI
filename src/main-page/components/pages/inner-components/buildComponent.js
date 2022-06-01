@@ -57,7 +57,9 @@ const BuildComponent = ({ build }) => {
             <UsernameDisplay>{build.user.username}</UsernameDisplay>
           </NavLink>
         </UserDiv>
-
+        <BuildInfo>
+          {build.playerRace} vs {build.opponentRace}
+        </BuildInfo>
         {visibillity ? (
           <ExpandButton onClick={() => onTitleClick()}>
             <span class="material-symbols-outlined">expand_less</span>
@@ -73,9 +75,7 @@ const BuildComponent = ({ build }) => {
       <ContentHeader>
         <BuildInfo>{build.published}</BuildInfo>
 
-        <BuildInfo>
-          {build.playerRace} vs {build.opponentRace}
-        </BuildInfo>
+
         <LikesCount onClick={() => onSubmit(build.id)}>
           ❤ {build.likesCount}
         </LikesCount>

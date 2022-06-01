@@ -23,7 +23,7 @@ export const NavLink = styled(Link)`
     cursor: pointer;
 
     &.active{
-        color: #15cdfc;
+        color:   #15cdfc;
     }
 
     @media screen and (max-width: 768px){

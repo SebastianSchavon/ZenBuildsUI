@@ -42,7 +42,7 @@ const Leaderboard = () => {
                     <LeaderboardRow>
                         <ProfileImage  src={`${process.env.PUBLIC_URL}/${user.profileImage}`}/>
                         <Username>{user.username}</Username>
-                        <ZenPoints>{user.zenPoints} ❤</ZenPoints>
+                        <ZenPoints>❤ {user.zenPoints} </ZenPoints>
                     </LeaderboardRow>
                 </NavLink>
             ))}

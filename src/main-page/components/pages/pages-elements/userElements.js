@@ -31,6 +31,10 @@ export const Username = styled.p`
 export const ZenPoints = styled.p`
     margin: 0.2rem;
 `;
+export const ZPan = styled.span`
+    
+    color:  #15cdfc;
+`;
 export const RegDate = styled.p`
     margin: 0.2rem;
 `;

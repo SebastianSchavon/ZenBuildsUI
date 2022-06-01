@@ -20,6 +20,7 @@ import {
   BuildsP,
   ErrorMessage,
   NavLink,
+  ZPan
 } from "./pages-elements/userElements.js";
 import BuildComponent from "./inner-components/buildComponent";
 import FollowerComponent from "./inner-components/followerComponent";
@@ -160,7 +161,7 @@ const User = () => {
         <ProfileImage src={`${process.env.PUBLIC_URL}/${user.profileImage}`} />
         <Username>{user.username}</Username>
         <Description>{user.description}</Description>
-        <ZenPoints>ZenPonts: {user.zenPoints} ❤</ZenPoints>
+        <ZenPoints>ZenPoints: <ZPan> ❤ {user.zenPoints} </ZPan></ZenPoints>
         <RegDate>Registration date: {user.registerDate}</RegDate>
 
         {visibillity ? (

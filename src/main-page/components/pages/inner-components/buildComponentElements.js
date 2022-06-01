@@ -33,6 +33,8 @@ export const ExpandButton = styled.button`
 
 export const Content = styled.p`
     white-space: pre-wrap;
+    line-height: 140%;
+    letter-spacing: 1.5px;
     font-size: 110%;
     text-align: start;
     margin-top: 1rem;
@@ -50,6 +52,7 @@ export const Title = styled.p`
     font-size: 80%;
     margin-top: 0.5rem;
     font-weight: bold;
+    
 
     &:hover {
         cursor: pointer;
@@ -59,11 +62,12 @@ export const Title = styled.p`
 export const BuildInfo = styled.p`
     font-size: 80%;
     margin-top: 0.5rem;
+    margin-right: 2rem;
 `;
 
 export const LikesCount = styled.p`
     margin-top: 0.5rem;
-    color: #ef4848;
+    color:  #15cdfc;
 
     &:hover {
         cursor: pointer;
