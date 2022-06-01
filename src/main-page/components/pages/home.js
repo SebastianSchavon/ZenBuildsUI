@@ -17,7 +17,6 @@ const Home = () => {
             .get("http://localhost:4000/builds/getAuthenticatedUserFeed", {
                 headers: {
                     "Content-Type": "application/json",
-                    // use Token saved in localstorage
                     Authorization: localStorage.getItem("token"),
                 },
             })
@@ -27,7 +26,7 @@ const Home = () => {
             })
             .catch(function (error) {
                 console.log("Error: ", error);
-                // display error message here
+
             });
     };
 

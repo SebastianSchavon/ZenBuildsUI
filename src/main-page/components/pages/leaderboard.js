@@ -31,7 +31,6 @@ const Leaderboard = () => {
             })
             .catch(function (error) {
                 console.log("Error: ", error);
-                // display error message here
             });
     };
 
