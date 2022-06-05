@@ -1,13 +1,16 @@
 import {
-    LogDiv
+    LogDiv,
+    LogDivRow,
+    LogP1
 } from "./logComponentElements"
 
 const LogComponent = ({ Log }) => {
     return ( 
         <LogDiv>
-            <p>Date: {Log.date}</p>
-            <p>Ip: {Log.ip}</p>
-            <p>Authentication successful? {Log.authSuccessful}</p>
+            <LogDivRow>Date: <LogP1>{Log.date}</LogP1></LogDivRow>
+            <LogDivRow>IP: <LogP1>{Log.ip}</LogP1></LogDivRow>
+            <LogDivRow>Authentication success: <LogP1>{'' + Log.authSuccessful}</LogP1></LogDivRow>
+            
         </LogDiv>
     );
 }

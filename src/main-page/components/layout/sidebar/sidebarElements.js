@@ -6,7 +6,7 @@ export const SidebarContainer = styled.aside`
     position: fixed;
     z-index: 999;
     width: 100%;
-    height: 30%;
+    height: 40%;
     background-color: #0d0d0d;
     display: grid;
     align-items: center;
