@@ -12,6 +12,7 @@ import Register from "./components/auth/register"
 import { PrivateRoute } from "./components/routing/privateRoute";
 import "./main-page.css";
 import Sidebar from "./components/layout/sidebar/sidebar";
+import Log from "./components/pages/log"
 
 function App() {
     const [visibillity, setVisibillity] = useState(false);
@@ -29,6 +30,7 @@ function App() {
                             <Route exact path="/leaderboard" element={<Leaderboard />} />
                             <Route exact path="/profile" element={<Profile />} />
                             <Route exact={true} path="user/:id" element={<User />} />
+                            <Route exact={true} path="logs/:id" element={<Log />} />
                             <Route exact path="build" element={<Build />} />
                         </Route>
                         <Route exact path="/register" element={<Register />} />

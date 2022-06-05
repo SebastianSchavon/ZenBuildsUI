@@ -221,6 +221,9 @@ const Profile = () => {
         <NavLink to={"/user/" + profileId}>
           <SubmitBtn>View Profile</SubmitBtn>
         </NavLink>
+        <NavLink to={"/logs/" + profileId}>
+          <SubmitBtn>View logs</SubmitBtn> 
+        </NavLink>
 
         <SubmitBtn onClick={onBuildButtonClick}>New Build Order</SubmitBtn>
       </ProfileSection>
