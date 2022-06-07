@@ -193,7 +193,7 @@ const User = () => {
         {followingFollowers ? (
           <FollowersDiv>
             {userFollowers.map((follower, index) => (
-              <NavLink to={"/user/" + follower.user_User.id}>
+              <NavLink reloadDocument to={"/user/" + follower.user_User.id}>
                 <FollowerComponent
                   date={follower.followDate}
                   follower={follower.user_User}
@@ -204,7 +204,7 @@ const User = () => {
         ) : (
           <FollowersDiv>
             {userFollowing.map((follower, index) => (
-              <NavLink to={"/user/" + follower.follower_User.id}>
+              <NavLink reloadDocument to={"/user/" + follower.follower_User.id}>
                 <FollowerComponent
                   date={follower.followDate}
                   follower={follower.follower_User}
